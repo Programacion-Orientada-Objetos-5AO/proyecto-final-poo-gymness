@@ -1,4 +1,4 @@
-package ar.edu.huergo.jsanchezortega.gymness.entity.Persona;
+package ar.edu.huergo.jsanchezortega.gymness.entity.persona;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

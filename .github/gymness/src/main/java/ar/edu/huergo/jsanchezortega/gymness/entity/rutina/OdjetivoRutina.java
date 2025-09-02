@@ -1,4 +1,6 @@
-package ar.edu.huergo.jsanchezortega.gymness.entity.persona;
+package ar.edu.huergo.jsanchezortega.gymness.entity.rutina;
+
+
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -14,17 +16,17 @@ import lombok.AllArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "especialidades")
-public class Especialidad {
+@Table(name = "odjetivo_rutina")
+public class OdjetivoRutina {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false, unique = true, length = 50)
-    private String nombre; // Ej: PSICOLOGO, NUTRICIONISTA, ENTRENADOR
+    private String nombre; // Ej: BAJAR_PESO, GANAR_MUSCULO, MATENIMIENTO
 
-    public Especialidad(String nombre) {
+    public OdjetivoRutina(String nombre) {
         this.nombre = nombre;
     }
 }
