@@ -2,6 +2,7 @@ package ar.edu.huergo.jsanchezortega.gymness.dto.persona;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -28,7 +29,9 @@ public class ClienteDTO extends PersonaDTO {
     private String obraSocial;
     
     @NotNull(message = "Es obligatorio poner la fecha de nacimiento")
+    @Past(message = "La fecha de nacimiento debe ser en el pasado")
     private LocalDate fechaNacimiento;
+
     
     private List<Long> planIds;
 }
