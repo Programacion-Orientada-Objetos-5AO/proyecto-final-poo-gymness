@@ -9,9 +9,11 @@ import jakarta.validation.constraints.Size;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Entity
+@EqualsAndHashCode(callSuper = true)
 @Table(name = "profesional")
 @NoArgsConstructor
 @AllArgsConstructor
