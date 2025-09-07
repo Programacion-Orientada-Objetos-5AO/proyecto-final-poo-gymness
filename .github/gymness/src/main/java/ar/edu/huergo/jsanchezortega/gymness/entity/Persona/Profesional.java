@@ -5,19 +5,22 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
+import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 @Entity
+@Data
 @EqualsAndHashCode(callSuper = true)
 @Table(name = "profesional")
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@SuperBuilder
 public class Profesional extends Persona{
 
     
@@ -28,12 +31,11 @@ public class Profesional extends Persona{
     @Size(max = 20, message = "El teléfono no puede superar los 20 caracteres")
     private String telefono;
 
-
     @NotBlank(message = "La matricula del profesional es obligatoria")
     @Size(max = 100, message = "La matricula no puede superar los 100 caracteres")
     private String matriculaProfesional; // si aplica
 
-    @NotBlank(message = "Se debe saber el estado del profresional")
+    @NotNull(message = "Se debe saber el estado del profresional")
     private boolean activo;
 
     @ManyToOne
