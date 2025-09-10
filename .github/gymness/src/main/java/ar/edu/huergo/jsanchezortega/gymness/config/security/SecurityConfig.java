@@ -25,7 +25,7 @@ import ar.edu.huergo.jsanchezortega.gymness.repository.security.UsuarioRepositor
 @EnableMethodSecurity
 public class SecurityConfig {
 
-    @Bean
+   @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http,
             JwtAuthenticationFilter jwtAuthenticationFilter) throws Exception {
         // Configuración central de Spring Security con JWT:

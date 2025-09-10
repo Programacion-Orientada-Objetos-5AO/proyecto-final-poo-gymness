@@ -28,7 +28,7 @@ public class MusculoObjetivo {
     @Column(nullable = false, unique = true, length = 50)
     private String nombre; // Ej: PECHO, ESPALDA, TRICEP.ETC
 
-    @ManyToMany(mappedBy = "ejercicios")
+    @ManyToMany(mappedBy = "musculosObjetivo")
     private List<Ejercicio> ejercicios;
 
     public MusculoObjetivo(String nombre) {

@@ -1,9 +1,9 @@
 package ar.edu.huergo.jsanchezortega.gymness.entity.persona;
 
+import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -17,7 +17,7 @@ import lombok.experimental.SuperBuilder;
 @Entity
 @Data
 @EqualsAndHashCode(callSuper = true)
-@Table(name = "profesional")
+@DiscriminatorValue("PROFESIONAL")
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder

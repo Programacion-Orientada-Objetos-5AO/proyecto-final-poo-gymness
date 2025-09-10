@@ -48,16 +48,18 @@ public class EjercicioController {
 
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<EjercicioDTO> crearEjercicio(
-            @Valid @RequestBody CrearEjercicioDTO crearEjercicioDTO,
-            @RequestParam List<Long> tipoEjercicioIds,
-            @RequestParam List<Long> musculoObjetivoIds) {
+    public ResponseEntity<EjercicioDTO> crearEjercicio(@Valid @RequestBody CrearEjercicioDTO crearEjercicioDTO) {
         
         Ejercicio ejercicio = ejercicioMapper.toEntity(crearEjercicioDTO);
-        Ejercicio nuevoEjercicio = ejercicioService.crearEjercicio(ejercicio, tipoEjercicioIds, musculoObjetivoIds);
+        Ejercicio nuevoEjercicio = ejercicioService.crearEjercicio(
+            ejercicio,
+            crearEjercicioDTO.getTipoEjercicioIds(),
+            crearEjercicioDTO.getMusculosObjetivoIds()  
+        );
         EjercicioDTO ejercicioDTO = ejercicioMapper.toDTO(nuevoEjercicio);
         return ResponseEntity.ok(ejercicioDTO);
     }
+
 
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")

@@ -1,11 +1,11 @@
 package ar.edu.huergo.jsanchezortega.gymness.entity.persona;
 
 
+import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.ManyToMany;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Past;
@@ -23,7 +23,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "cliente")
+@DiscriminatorValue("CLIENTE")
 @EqualsAndHashCode(callSuper = true)
 
 
@@ -44,10 +44,11 @@ public class Cliente extends Persona{
     @Past(message = "La fecha de nacimiento debe ser en el pasado")
     private LocalDate fechaNacimiento;
 
-    @OneToMany
-    @JoinTable(name = "Clientes_Planes",
-       joinColumns = @JoinColumn(name = "cliente_id"),
-       inverseJoinColumns = @JoinColumn(name = "plan_id"))
+    @ManyToMany
+    @JoinTable(
+        name = "Clientes_Planes",
+        joinColumns = @JoinColumn(name = "cliente_id"),
+        inverseJoinColumns = @JoinColumn(name = "plan_id")
+    )
     private List<Plan> planes;
-    
 }

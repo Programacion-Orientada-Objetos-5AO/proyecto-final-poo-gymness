@@ -2,12 +2,13 @@ package ar.edu.huergo.jsanchezortega.gymness.entity.plan;
 
 import java.util.List;
 
+
 import ar.edu.huergo.jsanchezortega.gymness.entity.persona.Cliente;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;
@@ -35,12 +36,12 @@ public class Plan {
     @Size(min = 3, max = 255, message = "La descripcion debe tener entre 3 y 255 caracteres")
     private String descripcion;
 
-   @Positive(message = "El precio debe ser mayor a 0")
-   private double precio;
+    @Positive(message = "El precio debe ser mayor a 0")
+    private double precio;
 
 
 
-    @OneToMany(mappedBy = "plan")
+    @ManyToMany(mappedBy = "planes")  
     private List<Cliente> clientes;
 
 }

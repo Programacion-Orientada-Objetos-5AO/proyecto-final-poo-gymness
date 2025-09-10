@@ -1,7 +1,9 @@
 package ar.edu.huergo.jsanchezortega.gymness.dto.rutina;
 
+import java.util.List;
+
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -31,9 +33,9 @@ public class CrearEjercicioDTO {
     
     private Boolean activo = true;
 
-    @NotNull(message = "El músculo objetivo es obligatorio")
-    private Long musculoObjetivoId;
-    
-    @NotNull(message = "El tipo de ejercicio es obligatorio")
-    private Long tipoEjercicioId;
+    @NotEmpty(message = "Debe seleccionar al menos un músculo objetivo")
+    private List<Long> musculosObjetivoIds; // plural, coincide con la entidad
+
+    @NotEmpty(message = "Debe seleccionar al menos un tipo de ejercicio")
+    private List<Long> tipoEjercicioIds; // plural
 }
