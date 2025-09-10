@@ -1,10 +1,13 @@
 package ar.edu.huergo.jsanchezortega.gymness.entity.rutina;
 
+import java.util.List;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,6 +27,9 @@ public class MusculoObjetivo {
 
     @Column(nullable = false, unique = true, length = 50)
     private String nombre; // Ej: PECHO, ESPALDA, TRICEP.ETC
+
+    @ManyToMany(mappedBy = "ejercicios")
+    private List<Ejercicio> ejercicios;
 
     public MusculoObjetivo(String nombre) {
         this.nombre = nombre;

@@ -1,5 +1,7 @@
 package ar.edu.huergo.jsanchezortega.gymness.dto.rutina;
 
+import java.util.List;
+
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -34,11 +36,11 @@ public class EjercicioDTO {
     private Boolean activo;
     
     @NotNull(message = "El músculo objetivo es obligatorio")
-    private Long musculoObjetivoId;
+    private List<Long> musculoObjetivoId;
     
     @NotNull(message = "El tipo de ejercicio es obligatorio")
     private Long tipoEjercicioId;
     
-    private MusculoOdjetivoDTO musculoObjetivo;
+    private List<MusculoOdjetivoDTO> musculoObjetivo;
     private TipoEjercicioDTO tipoEjercicio;
 }

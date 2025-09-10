@@ -1,5 +1,6 @@
 package ar.edu.huergo.jsanchezortega.gymness.mapper.rutina;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -10,6 +11,7 @@ import ar.edu.huergo.jsanchezortega.gymness.dto.rutina.EjercicioDTO;
 import ar.edu.huergo.jsanchezortega.gymness.dto.rutina.MusculoOdjetivoDTO;
 import ar.edu.huergo.jsanchezortega.gymness.dto.rutina.TipoEjercicioDTO;
 import ar.edu.huergo.jsanchezortega.gymness.entity.rutina.Ejercicio;
+import ar.edu.huergo.jsanchezortega.gymness.entity.rutina.MusculoObjetivo;
 
 @Component
 public class EjercicioMapper {
@@ -42,7 +44,6 @@ public class EjercicioMapper {
         ejercicio.setActivo(dto.getActivo());
         return ejercicio;
     }
-
     public EjercicioDTO toDTO(Ejercicio entity) {
         if (entity == null) {
             return null;
@@ -56,15 +57,8 @@ public class EjercicioMapper {
         dto.setVideoUrl(entity.getVideoUrl());
         dto.setImagenUrl(entity.getImagenUrl());
         dto.setActivo(entity.getActivo());
-        
-        if (entity.getMusculoObjetivo() != null) {
-            dto.setMusculoObjetivoId(entity.getMusculoObjetivo().getId());
-            MusculoOdjetivoDTO musculoDTO = new MusculoOdjetivoDTO();
-            musculoDTO.setId(entity.getMusculoObjetivo().getId());
-            musculoDTO.setNombre(entity.getMusculoObjetivo().getNombre());
-            dto.setMusculoObjetivo(musculoDTO);
-        }
-        
+
+        // Tipo de ejercicio (ManyToOne → uno solo)
         if (entity.getTipoEjercicio() != null) {
             dto.setTipoEjercicioId(entity.getTipoEjercicio().getId());
             TipoEjercicioDTO tipoDTO = new TipoEjercicioDTO();
@@ -72,9 +66,28 @@ public class EjercicioMapper {
             tipoDTO.setNombre(entity.getTipoEjercicio().getNombre());
             dto.setTipoEjercicio(tipoDTO);
         }
-        
+
+        // Músculos objetivo (ManyToMany → lista)
+        if (entity.getMusculosObjetivo() != null && !entity.getMusculosObjetivo().isEmpty()) {
+            List<MusculoOdjetivoDTO> musculosDTO = new ArrayList<>();
+            List<Long> ids = new ArrayList<>();
+
+            for (MusculoObjetivo musculo : entity.getMusculosObjetivo()) {
+                ids.add(musculo.getId());
+
+                MusculoOdjetivoDTO musculoDTO = new MusculoOdjetivoDTO();
+                musculoDTO.setId(musculo.getId());
+                musculoDTO.setNombre(musculo.getNombre());
+                musculosDTO.add(musculoDTO);
+            }
+
+            dto.setMusculoObjetivoId(ids);
+            dto.setMusculoObjetivo(musculosDTO);
+        }
+
         return dto;
     }
+
 
     public List<EjercicioDTO> toDTOList(List<Ejercicio> entities) {
         return entities.stream()

@@ -1,11 +1,16 @@
 package ar.edu.huergo.jsanchezortega.gymness.entity.rutina;
 
+import java.util.List;
+import java.util.ArrayList;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
@@ -29,9 +34,7 @@ public class Ejercicio {
     @Column(nullable = false, length = 500)
     private String descripcion;
     
-    @ManyToOne
-    @JoinColumn(name = "musculo_objetivo_id", nullable = false)
-    private MusculoObjetivo musculoObjetivo;
+    
     
     @ManyToOne
     @JoinColumn(name = "tipo_ejercicio_id", nullable = false)
@@ -45,8 +48,16 @@ public class Ejercicio {
     
     @Column(length = 255)
     private String imagenUrl;
-    
-    @Column(nullable = false)
+        
+        @Column(nullable = false)
     private Boolean activo = true;
+
+    @ManyToMany
+    @JoinTable(
+        name = "ejercicio_musculo",
+        joinColumns = @JoinColumn(name = "ejercicio_id"),
+        inverseJoinColumns = @JoinColumn(name = "musculo_id")
+    )
+    private List<MusculoObjetivo> musculosObjetivo = new ArrayList<>();
     
 }

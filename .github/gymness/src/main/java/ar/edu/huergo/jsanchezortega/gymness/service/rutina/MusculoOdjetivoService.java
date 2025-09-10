@@ -2,7 +2,6 @@ package ar.edu.huergo.jsanchezortega.gymness.service.rutina;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,7 +35,7 @@ public class MusculoOdjetivoService {
         return musculoObjetivoRepository.save(musculoObjetivoExistente);
     }
 
-    public Optional<MusculoObjetivo> obtenerTipoEjercicioPorNombre(String nombre){
+    public List<MusculoObjetivo> obtenerTipoEjercicioPorNombre(String nombre){
         return musculoObjetivoRepository.findByNombre(nombre);
     }
 
