@@ -1,4 +1,5 @@
 package ar.edu.huergo.jsanchezortega.gymness.mapper.persona;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -73,4 +74,3 @@ public class ClienteMapper {
                 .collect(Collectors.toList());
     }
 }
-

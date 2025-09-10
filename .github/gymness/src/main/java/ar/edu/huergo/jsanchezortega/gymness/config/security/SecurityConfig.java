@@ -39,7 +39,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.POST, "/api/auth/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/usuarios/registrar").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/platos/**")
+                        .requestMatchers(HttpMethod.GET, "/api/gymness/**")
                         .hasAnyRole("ADMIN", "CLIENTE").requestMatchers("/api/ingredientes/**")
                         .hasRole("ADMIN").requestMatchers(HttpMethod.POST, "/api/platos/**")
                         .hasRole("ADMIN").requestMatchers(HttpMethod.PUT, "/api/platos/**")

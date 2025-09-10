@@ -18,6 +18,7 @@ public class ProfesionalMapper {
             return null;
         }
         return Profesional.builder()
+                .id(dto.getId())
                 .nombre(dto.getNombre())
                 .apellido(dto.getApellido())
                 .documento(dto.getDocumento())
