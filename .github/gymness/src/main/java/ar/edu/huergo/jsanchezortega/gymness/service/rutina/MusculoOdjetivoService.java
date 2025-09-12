@@ -39,7 +39,15 @@ public class MusculoOdjetivoService {
         return musculoObjetivoRepository.findByNombre(nombre);
     }
 
-    public List<MusculoObjetivo> resolverIngredientes(List<Long> musculoObjetivoIds) throws IllegalArgumentException, EntityNotFoundException {
+    public void eliminarMusculoObjetivo(Long id) {
+        if (!musculoObjetivoRepository.existsById(id)) {
+            throw new EntityNotFoundException("El músculo con id " + id + " no existe");
+        }
+        musculoObjetivoRepository.deleteById(id);
+    }
+
+
+    public List<MusculoObjetivo> resolverMusculoObjetivos(List<Long> musculoObjetivoIds) throws IllegalArgumentException, EntityNotFoundException {
         if (musculoObjetivoIds == null || musculoObjetivoIds.isEmpty()) {
             throw new IllegalArgumentException("Debe especificar al menos un ingrediente");
         }

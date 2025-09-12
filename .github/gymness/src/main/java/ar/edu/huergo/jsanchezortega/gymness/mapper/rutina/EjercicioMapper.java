@@ -60,7 +60,7 @@ public class EjercicioMapper {
 
         // Tipo de ejercicio (ManyToOne → uno solo)
         if (entity.getTipoEjercicio() != null) {
-            dto.setTipoEjercicioId(entity.getTipoEjercicio().getId());
+            dto.setTipoEjercicioIds(entity.getTipoEjercicio().getId());
             TipoEjercicioDTO tipoDTO = new TipoEjercicioDTO();
             tipoDTO.setId(entity.getTipoEjercicio().getId());
             tipoDTO.setNombre(entity.getTipoEjercicio().getNombre());
@@ -81,7 +81,7 @@ public class EjercicioMapper {
                 musculosDTO.add(musculoDTO);
             }
 
-            dto.setMusculoObjetivoId(ids);
+            dto.setMusculoObjetivoIds(ids);
             dto.setMusculoObjetivo(musculosDTO);
         }
 

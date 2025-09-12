@@ -34,7 +34,7 @@ public class EjercicioService {
 
     public Ejercicio crearEjercicio(Ejercicio ejercicio, List<Long> tipoEjercicioIds, List<Long> musculoObjetivoIds){
         List<TipoEjercicio> tipoEjercicios = tipoEjercicioService.resolverTipo(tipoEjercicioIds);
-        List<MusculoObjetivo> musculoObjetivos = musculoObjetivosService.resolverIngredientes(musculoObjetivoIds);
+        List<MusculoObjetivo> musculoObjetivos = musculoObjetivosService.resolverMusculoObjetivos(musculoObjetivoIds);
 
         if (!tipoEjercicios.isEmpty()) {
             ejercicio.setTipoEjercicio(tipoEjercicios.get(0));
@@ -55,11 +55,11 @@ public class EjercicioService {
 
         if (tipoEjercicioIds != null && !tipoEjercicioIds.isEmpty()) {
             List<TipoEjercicio> tipoEjercicios = tipoEjercicioService.resolverTipo(tipoEjercicioIds);
-            ejercicioExistente.setTipoEjercicio(tipoEjercicios.get(0)); // porque tu entidad solo admite uno
+            ejercicioExistente.setTipoEjercicio(tipoEjercicios.get(0)); 
         }
 
         if (musculoObjetivoIds != null && !musculoObjetivoIds.isEmpty()) {
-            List<MusculoObjetivo> musculoObjetivos = musculoObjetivosService.resolverIngredientes(musculoObjetivoIds);
+            List<MusculoObjetivo> musculoObjetivos = musculoObjetivosService.resolverMusculoObjetivos(musculoObjetivoIds);
             ejercicioExistente.setMusculosObjetivo(musculoObjetivos);
         }
 

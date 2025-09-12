@@ -40,6 +40,14 @@ public class TipoEjercicioService {
         return tipoEjercicioRepository.findByNombre(nombre);
     }
 
+    public void eliminarTipoEjercicio(Long id) {
+        if (!tipoEjercicioRepository.existsById(id)) {
+            throw new EntityNotFoundException("El músculo con id " + id + " no existe");
+        }
+        tipoEjercicioRepository.deleteById(id);
+    }
+
+
     public List<TipoEjercicio> resolverTipo(List<Long> tipoEjercicioIds) throws IllegalArgumentException, EntityNotFoundException {
         if (tipoEjercicioIds == null || tipoEjercicioIds.isEmpty()) {
             throw new IllegalArgumentException("Debe especificar al menos un ingrediente");

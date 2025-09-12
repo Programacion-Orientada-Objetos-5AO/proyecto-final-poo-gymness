@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -75,5 +76,11 @@ public class TipoEjercicioController {
         TipoEjercicio tipoActualizado = tipoEjercicioService.actualizarTipoEjercicio(id, tipo);
         TipoEjercicioDTO tipoActualizadoDTO = new TipoEjercicioDTO(tipoActualizado.getId(), tipoActualizado.getNombre());
         return ResponseEntity.ok(tipoActualizadoDTO);
+    }
+
+     @DeleteMapping("/{id}")
+    public ResponseEntity<Void> eliminar(@PathVariable Long id) {
+        tipoEjercicioService.eliminarTipoEjercicio(id); 
+        return ResponseEntity.noContent().build();
     }
 }
