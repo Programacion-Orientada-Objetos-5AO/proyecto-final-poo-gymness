@@ -95,7 +95,7 @@ class TipoEjercicioServiceTest {
         TipoEjercicio tipoActualizado = new TipoEjercicio("HIIT");
         
         when(tipoEjercicioRepository.findById(1L)).thenReturn(Optional.of(tipoEjercicio));
-        when(tipoEjercicioRepository.save(any(TipoEjercicio.class))).thenReturn(tipoEjercicio);
+        when(tipoEjercicioRepository.save(any(TipoEjercicio.class))).thenReturn(tipoEjercicio); 
 
         TipoEjercicio resultado = tipoEjercicioService.actualizarTipoEjercicio(1L, tipoActualizado);
 
