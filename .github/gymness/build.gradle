@@ -47,11 +47,23 @@ dependencies {
 	testAnnotationProcessor 'org.projectlombok:lombok'
 
 	// JWT
-		implementation 'io.jsonwebtoken:jjwt-api:0.12.5'
-		runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.12.5'
-		runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.12.5'
+	implementation 'io.jsonwebtoken:jjwt-api:0.12.5'
+	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.12.5'
+	runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.12.5'
 
-		implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+
+	// Para pruebas unitarias e integración con Spring Boot
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+	// Para pruebas de seguridad (Spring Security)
+	testImplementation 'org.springframework.security:spring-security-test'
+
+	// Si necesitás MockMvc (ya lo incluís con spring-boot-starter-web)
+	testImplementation 'org.springframework.boot:spring-boot-starter-web'
+
+	// Jackson para JSON (normalmente ya viene con spring-boot-starter-web)
+	implementation 'com.fasterxml.jackson.core:jackson-databind'
 
 }
 
