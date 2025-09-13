@@ -1,0 +1,72 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.5.5'
+	id 'io.spring.dependency-management' version '1.1.7'
+}
+
+group = 'ar.edu.huergo.jsanchezortega'
+version = '0.0.1-SNAPSHOT'
+description = 'Demo project for Spring Boot'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(21)
+	}
+}
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
+	// Libreria para acceder a bases de datos relacionales usando JDBC (Java Database Connectivity)
+	implementation 'org.springframework.data:spring-data-jdbc'
+	// Libreria que implementa JPA (Java Persistence API) para mapear objetos Java a tablas de base de datos
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	// Base de datos en memoria H2, util para desarrollo y testing
+	runtimeOnly 'com.h2database:h2'
+
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+
+	// Lombok solo para compilación (no runtime)
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+	testCompileOnly 'org.projectlombok:lombok'
+	testAnnotationProcessor 'org.projectlombok:lombok'
+
+	// JWT
+	implementation 'io.jsonwebtoken:jjwt-api:0.12.5'
+	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.12.5'
+	runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.12.5'
+
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+
+	// Para pruebas unitarias e integración con Spring Boot
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+	// Para pruebas de seguridad (Spring Security)
+	testImplementation 'org.springframework.security:spring-security-test'
+
+	// Si necesitás MockMvc (ya lo incluís con spring-boot-starter-web)
+	testImplementation 'org.springframework.boot:spring-boot-starter-web'
+
+	// Jackson para JSON (normalmente ya viene con spring-boot-starter-web)
+	implementation 'com.fasterxml.jackson.core:jackson-databind'
+
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
