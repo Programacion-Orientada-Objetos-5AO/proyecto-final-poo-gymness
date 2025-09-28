@@ -11,6 +11,8 @@ import lombok.AllArgsConstructor;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Data
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
@@ -28,8 +30,10 @@ public class ClienteDTO extends PersonaDTO {
     @Size(min = 2, max = 100, message = "La obra social debe tener entre 2 y 100 caracteres")
     private String obraSocial;
     
+
     @NotNull(message = "Es obligatorio poner la fecha de nacimiento")
     @Past(message = "La fecha de nacimiento debe ser en el pasado")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate fechaNacimiento;
 
     

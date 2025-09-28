@@ -39,7 +39,7 @@ public class Profesional extends Persona{
     private boolean activo;
 
     @ManyToOne
-    @JoinColumn(name = "especialidad_id", nullable = false) // FK en la tabla profesional
+    @JoinColumn(name = "especialidad_id", nullable = false) 
     private Especialidad especialidad;
     
 }

@@ -33,7 +33,7 @@ public class Cliente extends Persona{
     @Size(min = 2, max = 100, message = "El nombre debe tener entre 2 y 100 caractertes")
     private String direccion;
 
-    @NotBlank(message = "Es obligatorio colocar la altura de la calle")
+    @NotNull(message = "Es obligatorio colocar la altura de la calle")
     private int nroDireccion;
 
     @NotBlank(message = "Es obligatorio poner el nombre de la obra social")

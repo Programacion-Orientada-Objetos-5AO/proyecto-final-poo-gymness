@@ -9,9 +9,12 @@ import ar.edu.huergo.jsanchezortega.gymness.dto.persona.ClienteDTO;
 import ar.edu.huergo.jsanchezortega.gymness.dto.persona.CrearClienteDTO;
 import ar.edu.huergo.jsanchezortega.gymness.entity.persona.Cliente;
 import ar.edu.huergo.jsanchezortega.gymness.entity.plan.Plan;
+import io.jsonwebtoken.lang.Collections;
 
 @Component
 public class ClienteMapper {
+
+    
 
     public Cliente toEntity(ClienteDTO dto) {
         if (dto == null) {
@@ -50,6 +53,7 @@ public class ClienteMapper {
         }
 
         ClienteDTO dto = new ClienteDTO();
+
         dto.setId(entity.getId());
         dto.setNombre(entity.getNombre());
         dto.setApellido(entity.getApellido());
@@ -58,13 +62,18 @@ public class ClienteMapper {
         dto.setNroDireccion(entity.getNroDireccion());
         dto.setObraSocial(entity.getObraSocial());
         dto.setFechaNacimiento(entity.getFechaNacimiento());
-        
-        if (entity.getPlanes() != null) {
-            dto.setPlanIds(entity.getPlanes().stream()
-                    .map(Plan::getId)
-                    .collect(Collectors.toList()));
+
+        // Planes (ManyToMany)
+        if (entity.getPlanes() != null && !entity.getPlanes().isEmpty()) {
+            List<Long> planIds = entity.getPlanes()
+                                    .stream()
+                                    .map(Plan::getId)
+                                    .toList();
+            dto.setPlanIds(planIds);
+        } else {
+            dto.setPlanIds(Collections.emptyList());
         }
-        
+
         return dto;
     }
 
