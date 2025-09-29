@@ -1,6 +1,5 @@
 package ar.edu.huergo.jsanchezortega.gymness.service.plan;
 
-import java.util.EmptyStackException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;

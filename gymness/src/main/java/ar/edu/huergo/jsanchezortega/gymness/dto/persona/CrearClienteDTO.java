@@ -1,5 +1,7 @@
 package ar.edu.huergo.jsanchezortega.gymness.dto.persona;
 
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -22,7 +24,8 @@ public class CrearClienteDTO {
     private String apellido;
     
     @NotNull(message = "El documento de identidad es obligatorio")
-    @Size(max = 8, message = "El documento debe tener máximo 8 dígitos")
+    @Min(10000000)      
+    @Max(99999999)     
     private Integer documento;
     
     @NotBlank(message = "Es obligatorio poner el nombre de la dirección")
