@@ -10,7 +10,8 @@ import org.springframework.stereotype.Repository;
 import ar.edu.huergo.jsanchezortega.gymness.entity.persona.Cliente;
 @Repository
 public interface ClienteRepository extends JpaRepository<Cliente, Long>{
-    Optional<Cliente> findByDocumento(Integer documento);
+    Optional<Cliente> findByDocumento(String documento);
+    boolean existsByDocumento(String documento); 
     List<Cliente> findByNombreContaining(String nombre);
     List<Cliente> findByApellidoContaining(String apellido);
     List<Cliente> findByObraSocial(String obraSocial);
@@ -18,8 +19,4 @@ public interface ClienteRepository extends JpaRepository<Cliente, Long>{
     List<Cliente> findByFechaNacimientoBetween(LocalDate fechaInicio, LocalDate fechaFin);
     List<Cliente> findByFechaNacimientoAfter(LocalDate fecha);
     List<Cliente> findByFechaNacimientoBefore(LocalDate fecha);
-    boolean existsByDocumento(Integer documento);
-    
-
-
 }

@@ -39,8 +39,8 @@ public class Persona {
     @Size (min = 2, max = 100, message = "El nombre debe tener entre 2 y 100 caractertes")
     private String apellido;
 
-    @NotBlank(message = "El documnento de identidad es obligatorio")
-    @Size(max = 8, message = "El documento debe tener maximo 8 digitos")
-    private int documento;
+    @NotBlank(message = "El documento de identidad es obligatorio")
+    @Size(min = 8, max = 8, message = "El documento debe tener exactamente 8 dígitos")
+    private String documento; 
     
 }

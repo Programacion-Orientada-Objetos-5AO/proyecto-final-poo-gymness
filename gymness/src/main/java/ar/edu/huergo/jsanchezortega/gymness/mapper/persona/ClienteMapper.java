@@ -24,7 +24,7 @@ public class ClienteMapper {
         cliente.setId(dto.getId());
         cliente.setNombre(dto.getNombre());
         cliente.setApellido(dto.getApellido());
-        cliente.setDocumento(dto.getDocumento());
+        cliente.setDocumento(dto.getDocumento() != null ? dto.getDocumento().toString() : null);
         cliente.setDireccion(dto.getDireccion());
         cliente.setNroDireccion(dto.getNroDireccion());
         cliente.setObraSocial(dto.getObraSocial());
@@ -57,7 +57,7 @@ public class ClienteMapper {
         dto.setId(entity.getId());
         dto.setNombre(entity.getNombre());
         dto.setApellido(entity.getApellido());
-        dto.setDocumento(entity.getDocumento());
+        dto.setDocumento(entity.getDocumento() != null ? Integer.valueOf(entity.getDocumento()) : null);
         dto.setDireccion(entity.getDireccion());
         dto.setNroDireccion(entity.getNroDireccion());
         dto.setObraSocial(entity.getObraSocial());

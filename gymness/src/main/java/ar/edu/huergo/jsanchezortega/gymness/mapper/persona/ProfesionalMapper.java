@@ -21,7 +21,7 @@ public class ProfesionalMapper {
                 .id(dto.getId())
                 .nombre(dto.getNombre())
                 .apellido(dto.getApellido())
-                .documento(dto.getDocumento())
+                .documento(dto.getDocumento()!= null ? dto.getDocumento().toString() : null)
                 .email(dto.getEmail())
                 .telefono(dto.getTelefono())
                 .matriculaProfesional(dto.getMatriculaProfesional())
@@ -53,7 +53,7 @@ public class ProfesionalMapper {
         dto.setId(entity.getId());
         dto.setNombre(entity.getNombre());
         dto.setApellido(entity.getApellido());
-        dto.setDocumento(entity.getDocumento());
+        dto.setDocumento(entity.getDocumento() != null ? Integer.valueOf(entity.getDocumento()) : null);
         dto.setEmail(entity.getEmail());
         dto.setTelefono(entity.getTelefono());
         dto.setMatriculaProfesional(entity.getMatriculaProfesional());

@@ -37,9 +37,9 @@ public class ProfesionalController {
 
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<ProfesionalDTO> crear(@Valid @RequestBody CrearProfesionalDTO dto) {
+    public ResponseEntity<ProfesionalDTO> crearProfesional(@Valid @RequestBody CrearProfesionalDTO dto) {
         Profesional profesional = profesionalMapper.toEntity(dto);
-        Profesional nuevo = profesionalService.crearProfesional(profesional);
+        Profesional nuevo = profesionalService.crearProfesional(profesional, dto.getEspecialidadId());
         return ResponseEntity.ok(profesionalMapper.toDTO(nuevo));
     }
 
@@ -47,7 +47,8 @@ public class ProfesionalController {
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ProfesionalDTO> actualizar(@PathVariable("id") Long id, @Valid @RequestBody ProfesionalDTO dto) {
         Profesional profesional = profesionalMapper.toEntity(dto);
-        Profesional actualizado = profesionalService.actualizarProfesional(id, profesional);
+        Long especialidadId = dto.getEspecialidadId();
+        Profesional actualizado = profesionalService.actualizarProfesional(id, profesional, especialidadId);
         return ResponseEntity.ok(profesionalMapper.toDTO(actualizado));
     }
 
