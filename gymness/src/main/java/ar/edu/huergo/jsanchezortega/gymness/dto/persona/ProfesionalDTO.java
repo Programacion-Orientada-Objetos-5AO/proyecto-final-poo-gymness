@@ -1,5 +1,7 @@
 package ar.edu.huergo.jsanchezortega.gymness.dto.persona;
 
+import java.util.List;
+
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -34,4 +36,7 @@ public class ProfesionalDTO extends PersonaDTO {
     private Long especialidadId;
     
     private EspecialidadDTO especialidad;
+
+    private List<Long> planIds; // plural
+
 }

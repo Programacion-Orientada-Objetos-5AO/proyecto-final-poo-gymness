@@ -37,7 +37,7 @@ public class ClienteService {
         return clienteRepository.save(cliente);
     }
 
-    public Cliente actualizarCliente(Long id, Cliente cliente) throws EntityNotFoundException {
+    public Cliente actualizarCliente(Long id, Cliente cliente, List<Long> planIds) throws EntityNotFoundException {
         Cliente clienteExistente = obtenerClientePorId(id);
         clienteExistente.setNombre(cliente.getNombre());
         clienteExistente.setApellido(cliente.getApellido());
@@ -46,6 +46,12 @@ public class ClienteService {
         clienteExistente.setNroDireccion(cliente.getNroDireccion());
         clienteExistente.setObraSocial(cliente.getObraSocial());
         clienteExistente.setFechaNacimiento(cliente.getFechaNacimiento());
+
+        if (planIds != null && !planIds.isEmpty()) {
+            List<Plan> plans = planService.resolverPlan(planIds);
+            clienteExistente.setPlanes(plans);
+        }
+
         return clienteRepository.save(clienteExistente);
     }
     

@@ -27,4 +27,9 @@ public class PlanDTO {
     private Double precio;
     
     private List<Long> clienteIds;
+
+    public void setProfesionalIds(List<Long> collect) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'setProfesionalIds'");
+    }
 }

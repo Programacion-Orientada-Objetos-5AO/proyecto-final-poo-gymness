@@ -1,8 +1,13 @@
 package ar.edu.huergo.jsanchezortega.gymness.entity.persona;
 
+import java.util.List;
+
+import ar.edu.huergo.jsanchezortega.gymness.entity.plan.Plan;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -37,6 +42,15 @@ public class Profesional extends Persona{
 
     @NotNull(message = "Se debe saber el estado del profresional")
     private boolean activo;
+
+
+    @ManyToMany
+    @JoinTable(
+        name = "Profesionales_Planes",
+        joinColumns = @JoinColumn(name = "profesional_id"),
+        inverseJoinColumns = @JoinColumn(name = "plan_id")
+    )
+    private List<Plan> planes;
 
     @ManyToOne
     @JoinColumn(name = "especialidad_id", nullable = true) 

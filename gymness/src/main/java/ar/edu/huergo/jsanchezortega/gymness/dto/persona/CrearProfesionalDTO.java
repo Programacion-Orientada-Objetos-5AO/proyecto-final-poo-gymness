@@ -1,6 +1,8 @@
 package ar.edu.huergo.jsanchezortega.gymness.dto.persona;
 
 
+import java.util.List;
+
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -42,4 +44,7 @@ public class CrearProfesionalDTO {
     
     @NotNull(message = "La especialidad es obligatoria")
     private Long especialidadId;
+
+    private List<Long> planIds; // plural
+
 }

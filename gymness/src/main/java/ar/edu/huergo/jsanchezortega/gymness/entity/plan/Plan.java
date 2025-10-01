@@ -4,11 +4,14 @@ import java.util.List;
 
 
 import ar.edu.huergo.jsanchezortega.gymness.entity.persona.Cliente;
+import ar.edu.huergo.jsanchezortega.gymness.entity.persona.Profesional;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;
@@ -39,9 +42,11 @@ public class Plan {
     @Positive(message = "El precio debe ser mayor a 0")
     private double precio;
 
-
+    @ManyToOne
+    @JoinColumn(name = "especialidad_id", nullable = true) 
+    private Cliente cliente;
 
     @ManyToMany(mappedBy = "planes")  
-    private List<Cliente> clientes;
+    private List<Profesional> profesionales;
 
 }

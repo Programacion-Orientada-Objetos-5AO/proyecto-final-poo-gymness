@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import ar.edu.huergo.jsanchezortega.gymness.dto.persona.ActualizarClienteDTO;
@@ -60,9 +61,10 @@ public class ClienteController {
     @PreAuthorize("hasRole('ADMIN') or (hasRole('CLIENTE') and @clienteService.esClientePropio(authentication.name, #id))")
     public ResponseEntity<ClienteDTO> actualizarCliente(
             @PathVariable("id") Long id, 
-            @Valid @RequestBody ActualizarClienteDTO clienteDTO) {
+            @Valid @RequestBody ActualizarClienteDTO clienteDTO,
+            @RequestParam(required = false) List<Long> planIds) {
         Cliente cliente = clienteMapper.toEntity(clienteDTO);
-        Cliente clienteActualizado = clienteService.actualizarCliente(id, cliente);
+        Cliente clienteActualizado = clienteService.actualizarCliente(id, cliente, planIds);
         ClienteDTO clienteActualizadoDTO = clienteMapper.toDTO(clienteActualizado);
         return ResponseEntity.ok(clienteActualizadoDTO);
     }

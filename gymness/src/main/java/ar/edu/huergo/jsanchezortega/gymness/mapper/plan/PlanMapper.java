@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component;
 import ar.edu.huergo.jsanchezortega.gymness.dto.plan.ActualizarPlanDTO;
 import ar.edu.huergo.jsanchezortega.gymness.dto.plan.CrearPlanDTO;
 import ar.edu.huergo.jsanchezortega.gymness.dto.plan.PlanDTO;
-import ar.edu.huergo.jsanchezortega.gymness.entity.persona.Cliente;
 import ar.edu.huergo.jsanchezortega.gymness.entity.plan.Plan;
 
 @Component
@@ -48,9 +47,13 @@ public class PlanMapper {
         dto.setDescripcion(entity.getDescripcion());
         dto.setPrecio(entity.getPrecio());
         
-        if (entity.getClientes() != null) {
-            dto.setClienteIds(entity.getClientes().stream()
-                    .map(Cliente::getId)
+        if (entity.getCliente() != null) {
+            dto.setClienteIds(List.of(entity.getCliente().getId()));
+        }
+
+        if (entity.getProfesionales() != null) {
+            dto.setProfesionalIds(entity.getProfesionales().stream()
+                    .map(profesional -> profesional.getId())
                     .collect(Collectors.toList()));
         }
         
