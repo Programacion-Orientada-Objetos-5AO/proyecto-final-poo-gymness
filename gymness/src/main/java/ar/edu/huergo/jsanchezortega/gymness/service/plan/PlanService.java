@@ -1,6 +1,7 @@
 package ar.edu.huergo.jsanchezortega.gymness.service.plan;
 
 import java.util.List;
+import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,5 +39,14 @@ public class PlanService {
     public void eliminarPlan(Long id) throws EntityNotFoundException{
         Plan plan = obtenerPlanPorId(id);
         planRepository.delete(plan);
+    }
+
+    public List<Plan> resolverPlan(List<Long> planIds) throws IllegalArgumentException, EntityNotFoundException {
+        List<Plan> plan = planRepository.findAllById(planIds);
+        if (plan.size() != planIds.stream().filter(Objects::nonNull).distinct()
+                .count()) {
+            throw new EntityNotFoundException("Uno o más tipo ejercicio no existen");
+        }
+        return plan ;
     }
 }

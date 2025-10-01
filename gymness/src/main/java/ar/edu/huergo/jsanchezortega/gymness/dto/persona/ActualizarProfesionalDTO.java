@@ -1,19 +1,19 @@
 package ar.edu.huergo.jsanchezortega.gymness.dto.persona;
 
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
-import java.time.LocalDate;
-import java.util.List;
+
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CrearClienteDTO {
-    
+public class ActualizarProfesionalDTO {
+
     @NotBlank(message = "El nombre debe ser obligatorio")
     @Size(min = 2, max = 100, message = "El nombre debe tener entre 2 y 100 caracteres")
     private String nombre;
@@ -26,19 +26,22 @@ public class CrearClienteDTO {
     @Size(min = 8, max = 8, message = "El documento debe tener exactamente 8 dígitos")
     private String documento; 
     
-    @NotBlank(message = "Es obligatorio poner el nombre de la dirección")
-    @Size(min = 2, max = 100, message = "La dirección debe tener entre 2 y 100 caracteres")
-    private String direccion;
+    @NotBlank(message = "El email no puede estar vacío")
+    @Email(message = "El email debe tener un formato válido")
+    @Size(max = 100, message = "El email no puede superar los 100 caracteres")
+    private String email;
     
-    @NotNull(message = "Es obligatorio colocar la altura de la calle")
-    private Integer nroDireccion;
+    @Size(max = 20, message = "El teléfono no puede superar los 20 caracteres")
+    private String telefono;
     
-    @NotBlank(message = "Es obligatorio poner el nombre de la obra social")
-    @Size(min = 2, max = 100, message = "La obra social debe tener entre 2 y 100 caracteres")
-    private String obraSocial;
+    @NotBlank(message = "La matrícula del profesional es obligatoria")
+    @Size(max = 100, message = "La matrícula no puede superar los 100 caracteres")
+    private String matriculaProfesional;
     
-    @NotNull(message = "Es obligatorio poner la fecha de nacimiento")
-    private LocalDate fechaNacimiento;
-
-    private List<Long> planIds; // plural
+    @NotNull(message = "Se debe saber el estado del profesional")
+    private Boolean activo;
+    
+    @NotNull(message = "La especialidad es obligatoria")
+    private Long especialidadId;
+  
 }

@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Component;
 
+import ar.edu.huergo.jsanchezortega.gymness.dto.persona.ActualizarProfesionalDTO;
 import ar.edu.huergo.jsanchezortega.gymness.dto.persona.CrearProfesionalDTO;
 import ar.edu.huergo.jsanchezortega.gymness.dto.persona.EspecialidadDTO;
 import ar.edu.huergo.jsanchezortega.gymness.dto.persona.ProfesionalDTO;
@@ -13,12 +14,11 @@ import ar.edu.huergo.jsanchezortega.gymness.entity.persona.Profesional;
 @Component
 public class ProfesionalMapper {
 
-    public Profesional toEntity(ProfesionalDTO dto) {
+    public Profesional toEntity(ActualizarProfesionalDTO dto) {
         if (dto == null) {
             return null;
         }
         return Profesional.builder()
-                .id(dto.getId())
                 .nombre(dto.getNombre())
                 .apellido(dto.getApellido())
                 .documento(dto.getDocumento()!= null ? dto.getDocumento().toString() : null)

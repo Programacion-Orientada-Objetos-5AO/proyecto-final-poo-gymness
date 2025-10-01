@@ -39,7 +39,7 @@ public class Profesional extends Persona{
     private boolean activo;
 
     @ManyToOne
-    @JoinColumn(name = "especialidad_id", nullable = false) 
+    @JoinColumn(name = "especialidad_id", nullable = true) 
     private Especialidad especialidad;
     
 }

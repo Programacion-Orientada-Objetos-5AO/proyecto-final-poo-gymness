@@ -5,30 +5,31 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Component;
 
+import ar.edu.huergo.jsanchezortega.gymness.dto.persona.ActualizarClienteDTO;
 import ar.edu.huergo.jsanchezortega.gymness.dto.persona.ClienteDTO;
 import ar.edu.huergo.jsanchezortega.gymness.dto.persona.CrearClienteDTO;
 import ar.edu.huergo.jsanchezortega.gymness.entity.persona.Cliente;
 import ar.edu.huergo.jsanchezortega.gymness.entity.plan.Plan;
 import io.jsonwebtoken.lang.Collections;
+import jakarta.validation.Valid;
 
 @Component
 public class ClienteMapper {
 
     
 
-    public Cliente toEntity(ClienteDTO dto) {
-        if (dto == null) {
+    public Cliente toEntity(ClienteDTO clienteDTO) {
+        if (clienteDTO == null) {
             return null;
         }
         Cliente cliente = new Cliente();
-        cliente.setId(dto.getId());
-        cliente.setNombre(dto.getNombre());
-        cliente.setApellido(dto.getApellido());
-        cliente.setDocumento(dto.getDocumento() != null ? dto.getDocumento().toString() : null);
-        cliente.setDireccion(dto.getDireccion());
-        cliente.setNroDireccion(dto.getNroDireccion());
-        cliente.setObraSocial(dto.getObraSocial());
-        cliente.setFechaNacimiento(dto.getFechaNacimiento());
+        cliente.setNombre(clienteDTO.getNombre());
+        cliente.setApellido(clienteDTO.getApellido());
+        cliente.setDocumento(clienteDTO.getDocumento() != null ? clienteDTO.getDocumento().toString() : null);
+        cliente.setDireccion(clienteDTO.getDireccion());
+        cliente.setNroDireccion(clienteDTO.getNroDireccion());
+        cliente.setObraSocial(clienteDTO.getObraSocial());
+        cliente.setFechaNacimiento(clienteDTO.getFechaNacimiento());
         return cliente;
     }
 
@@ -44,6 +45,18 @@ public class ClienteMapper {
         cliente.setNroDireccion(dto.getNroDireccion());
         cliente.setObraSocial(dto.getObraSocial());
         cliente.setFechaNacimiento(dto.getFechaNacimiento());
+        
+        if (dto.getPlanIds() != null && !dto.getPlanIds().isEmpty()) {
+            List<Plan> planes = dto.getPlanIds().stream()
+                .map(planId -> {
+                    Plan plan = new Plan();
+                    plan.setId(planId);
+                    return plan;
+                })
+                .collect(Collectors.toList());
+            cliente.setPlanes(planes);
+        }
+        
         return cliente;
     }
 

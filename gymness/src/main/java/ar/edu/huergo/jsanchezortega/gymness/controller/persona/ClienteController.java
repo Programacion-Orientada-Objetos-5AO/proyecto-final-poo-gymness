@@ -40,7 +40,7 @@ public class ClienteController {
 
     @GetMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN') or (hasRole('CLIENTE') and @clienteService.esClientePropio(authentication.name, #id))")
-    public ResponseEntity<ClienteDTO> obtenerClientePorId(@PathVariable Long id) {
+    public ResponseEntity<ClienteDTO> obtenerClientePorId(@PathVariable("id") Long id) {
         Cliente cliente = clienteService.obtenerClientePorId(id);
         ClienteDTO clienteDTO = clienteMapper.toDTO(cliente);
         return ResponseEntity.ok(clienteDTO);
@@ -50,7 +50,7 @@ public class ClienteController {
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ClienteDTO> crearCliente(@Valid @RequestBody CrearClienteDTO crearClienteDTO) {
         Cliente cliente = clienteMapper.toEntity(crearClienteDTO);
-        Cliente nuevoCliente = clienteService.crearCliente(cliente);
+        Cliente nuevoCliente = clienteService.crearCliente(cliente, crearClienteDTO.getPlanIds());
         ClienteDTO clienteDTO = clienteMapper.toDTO(nuevoCliente);
         return ResponseEntity.ok(clienteDTO);
     }
@@ -58,7 +58,7 @@ public class ClienteController {
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN') or (hasRole('CLIENTE') and @clienteService.esClientePropio(authentication.name, #id))")
     public ResponseEntity<ClienteDTO> actualizarCliente(
-            @PathVariable Long id, 
+            @PathVariable("id") Long id, 
             @Valid @RequestBody ClienteDTO clienteDTO) {
         Cliente cliente = clienteMapper.toEntity(clienteDTO);
         Cliente clienteActualizado = clienteService.actualizarCliente(id, cliente);
@@ -68,7 +68,7 @@ public class ClienteController {
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Void> eliminarCliente(@PathVariable Long id) {
+    public ResponseEntity<Void> eliminarCliente(@PathVariable("id") Long id) {
         clienteService.eliminarCliente(id);
         return ResponseEntity.noContent().build();
     }

@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ar.edu.huergo.jsanchezortega.gymness.entity.persona.Cliente;
+import ar.edu.huergo.jsanchezortega.gymness.entity.plan.Plan;
 import ar.edu.huergo.jsanchezortega.gymness.repository.persona.ClienteRepository;
+import ar.edu.huergo.jsanchezortega.gymness.service.plan.PlanService;
 import jakarta.persistence.EntityNotFoundException;
 
 @Service
@@ -14,6 +16,8 @@ public class ClienteService {
     
     @Autowired
     private ClienteRepository clienteRepository;
+    @Autowired
+    private PlanService planService;
 
     public List<Cliente> obtenerTodosLosClientes() {
         return clienteRepository.findAll();
@@ -24,7 +28,12 @@ public class ClienteService {
             .orElseThrow(() -> new EntityNotFoundException("Cliente no encontrado"));
     }
 
-    public Cliente crearCliente(Cliente cliente) {
+    public Cliente crearCliente(Cliente cliente, List<Long> plaId) {
+        List<Plan> plans = planService.resolverPlan(plaId);
+        
+        if (!plans.isEmpty()) {
+            cliente.setPlanes(plans);
+        }
         return clienteRepository.save(cliente);
     }
 

@@ -1,5 +1,6 @@
 package ar.edu.huergo.jsanchezortega.gymness.controller.persona;
 
+import ar.edu.huergo.jsanchezortega.gymness.dto.persona.ActualizarProfesionalDTO;
 import ar.edu.huergo.jsanchezortega.gymness.dto.persona.CrearProfesionalDTO;
 import ar.edu.huergo.jsanchezortega.gymness.dto.persona.ProfesionalDTO;
 import ar.edu.huergo.jsanchezortega.gymness.entity.persona.Profesional;
@@ -45,10 +46,10 @@ public class ProfesionalController {
 
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<ProfesionalDTO> actualizar(@PathVariable("id") Long id, @Valid @RequestBody ProfesionalDTO dto) {
+    public ResponseEntity<ProfesionalDTO> actualizar(@PathVariable("id") Long id,
+                                                    @Valid @RequestBody ActualizarProfesionalDTO dto) {
         Profesional profesional = profesionalMapper.toEntity(dto);
-        Long especialidadId = dto.getEspecialidadId();
-        Profesional actualizado = profesionalService.actualizarProfesional(id, profesional, especialidadId);
+        Profesional actualizado = profesionalService.actualizarProfesional(id, profesional, dto.getEspecialidadId());
         return ResponseEntity.ok(profesionalMapper.toDTO(actualizado));
     }
 

@@ -50,12 +50,12 @@ public class TipoEjercicioService {
 
     public List<TipoEjercicio> resolverTipo(List<Long> tipoEjercicioIds) throws IllegalArgumentException, EntityNotFoundException {
         if (tipoEjercicioIds == null || tipoEjercicioIds.isEmpty()) {
-            throw new IllegalArgumentException("Debe especificar al menos un ingrediente");
+            throw new IllegalArgumentException("Debe especificar al menos un tipo ejercicio");
         }
         List<TipoEjercicio> tipoEjercicios = tipoEjercicioRepository.findAllById(tipoEjercicioIds);
         if (tipoEjercicios.size() != tipoEjercicioIds.stream().filter(Objects::nonNull).distinct()
                 .count()) {
-            throw new EntityNotFoundException("Uno o más ingredientes no existen");
+            throw new EntityNotFoundException("Uno o más tipo ejercicio no existen");
         }
         return tipoEjercicios;
     }
