@@ -11,14 +11,13 @@ import ar.edu.huergo.jsanchezortega.gymness.dto.persona.CrearClienteDTO;
 import ar.edu.huergo.jsanchezortega.gymness.entity.persona.Cliente;
 import ar.edu.huergo.jsanchezortega.gymness.entity.plan.Plan;
 import io.jsonwebtoken.lang.Collections;
-import jakarta.validation.Valid;
 
 @Component
 public class ClienteMapper {
 
     
 
-    public Cliente toEntity(ClienteDTO clienteDTO) {
+    public Cliente toEntity(ActualizarClienteDTO clienteDTO) {
         if (clienteDTO == null) {
             return null;
         }

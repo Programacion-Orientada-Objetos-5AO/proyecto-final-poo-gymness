@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import ar.edu.huergo.jsanchezortega.gymness.dto.persona.ActualizarClienteDTO;
 import ar.edu.huergo.jsanchezortega.gymness.dto.persona.ClienteDTO;
 import ar.edu.huergo.jsanchezortega.gymness.dto.persona.CrearClienteDTO;
 import ar.edu.huergo.jsanchezortega.gymness.entity.persona.Cliente;
@@ -59,7 +60,7 @@ public class ClienteController {
     @PreAuthorize("hasRole('ADMIN') or (hasRole('CLIENTE') and @clienteService.esClientePropio(authentication.name, #id))")
     public ResponseEntity<ClienteDTO> actualizarCliente(
             @PathVariable("id") Long id, 
-            @Valid @RequestBody ClienteDTO clienteDTO) {
+            @Valid @RequestBody ActualizarClienteDTO clienteDTO) {
         Cliente cliente = clienteMapper.toEntity(clienteDTO);
         Cliente clienteActualizado = clienteService.actualizarCliente(id, cliente);
         ClienteDTO clienteActualizadoDTO = clienteMapper.toDTO(clienteActualizado);
