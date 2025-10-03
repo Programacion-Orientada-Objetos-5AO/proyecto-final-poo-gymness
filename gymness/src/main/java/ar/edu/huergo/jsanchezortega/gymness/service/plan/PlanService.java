@@ -41,12 +41,26 @@ public class PlanService {
         planRepository.delete(plan);
     }
 
-    public List<Plan> resolverPlan(List<Long> planIds) throws IllegalArgumentException, EntityNotFoundException {
-        List<Plan> plan = planRepository.findAllById(planIds);
-        if (plan.size() != planIds.stream().filter(Objects::nonNull).distinct()
-                .count()) {
-            throw new EntityNotFoundException("Uno o más tipo ejercicio no existen");
+    public Plan resolverPlan(Long planId) throws IllegalArgumentException, EntityNotFoundException {
+        if (planId == null) {
+            throw new IllegalArgumentException("El ID del plan no puede ser nulo");
         }
-        return plan ;
+
+        return planRepository.findById(planId)
+                .orElseThrow(() -> new EntityNotFoundException("El plan con ID " + planId + " no existe"));
     }
+
+    public List<Plan> resolverPlanes(List<Long> planIds) {
+    if (planIds == null || planIds.isEmpty()) {
+        return List.of();
+    }
+
+    List<Plan> planes = planRepository.findAllById(planIds);
+
+    if (planes.size() != planIds.stream().filter(Objects::nonNull).distinct().count()) {
+        throw new EntityNotFoundException("Uno o más planes no existen");
+    }
+
+    return planes;
+}
 }

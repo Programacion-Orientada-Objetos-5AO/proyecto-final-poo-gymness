@@ -8,9 +8,10 @@ import org.springframework.stereotype.Component;
 import ar.edu.huergo.jsanchezortega.gymness.dto.persona.ActualizarClienteDTO;
 import ar.edu.huergo.jsanchezortega.gymness.dto.persona.ClienteDTO;
 import ar.edu.huergo.jsanchezortega.gymness.dto.persona.CrearClienteDTO;
+import ar.edu.huergo.jsanchezortega.gymness.dto.plan.PlanDTO;
 import ar.edu.huergo.jsanchezortega.gymness.entity.persona.Cliente;
 import ar.edu.huergo.jsanchezortega.gymness.entity.plan.Plan;
-import io.jsonwebtoken.lang.Collections;
+
 
 @Component
 public class ClienteMapper {
@@ -32,7 +33,7 @@ public class ClienteMapper {
         return cliente;
     }
 
-    public Cliente toEntity(CrearClienteDTO dto) {
+    public Cliente toEntity(CrearClienteDTO dto, Plan plan) {
         if (dto == null) {
             return null;
         }
@@ -44,18 +45,8 @@ public class ClienteMapper {
         cliente.setNroDireccion(dto.getNroDireccion());
         cliente.setObraSocial(dto.getObraSocial());
         cliente.setFechaNacimiento(dto.getFechaNacimiento());
-        
-        if (dto.getPlanIds() != null && !dto.getPlanIds().isEmpty()) {
-            List<Plan> planes = dto.getPlanIds().stream()
-                .map(planId -> {
-                    Plan plan = new Plan();
-                    plan.setId(planId);
-                    return plan;
-                })
-                .collect(Collectors.toList());
-            cliente.setPlanes(planes);
-        }
-        
+        cliente.setPlan(plan); // asigno el plan único
+
         return cliente;
     }
 
@@ -74,16 +65,14 @@ public class ClienteMapper {
         dto.setNroDireccion(entity.getNroDireccion());
         dto.setObraSocial(entity.getObraSocial());
         dto.setFechaNacimiento(entity.getFechaNacimiento());
+        dto.setPlanId(entity.getPlan() != null ? entity.getPlan().getId() : null);
 
-        // Planes (ManyToMany)
-        if (entity.getPlanes() != null && !entity.getPlanes().isEmpty()) {
-            List<Long> planIds = entity.getPlanes()
-                                    .stream()
-                                    .map(Plan::getId)
-                                    .toList();
-            dto.setPlanIds(planIds);
-        } else {
-            dto.setPlanIds(Collections.emptyList());
+        if (entity.getPlan() != null) {
+            dto.setPlanId(entity.getPlan().getId());
+            PlanDTO planDTO = new PlanDTO();
+            planDTO.setId(entity.getPlan().getId());
+            planDTO.setNombre(entity.getPlan().getNombre());
+            dto.setPlan(planDTO);
         }
 
         return dto;

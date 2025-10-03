@@ -28,8 +28,5 @@ public class PlanDTO {
     
     private List<Long> clienteIds;
 
-    public void setProfesionalIds(List<Long> collect) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setProfesionalIds'");
-    }
+    private List<Long> profesionalIds; 
 }

@@ -1,7 +1,6 @@
 package ar.edu.huergo.jsanchezortega.gymness.dto.persona;
 
 import java.time.LocalDate;
-import java.util.List;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -41,6 +40,6 @@ public class ActualizarClienteDTO {
     @NotNull(message = "Es obligatorio poner la fecha de nacimiento")
     private LocalDate fechaNacimiento;
 
-    private List<Long> planIds; // plural
+    private Long planId;
 }
 

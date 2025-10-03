@@ -33,7 +33,7 @@ public class PlanController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<PlanDTO> obtenerPlanPorId(@PathVariable Long id) {
+    public ResponseEntity<PlanDTO> obtenerPlanPorId(@PathVariable("id") Long id) {
         try {
             Plan plan = planService.obtenerPlanPorId(id);
             return ResponseEntity.ok(planMapper.toDTO(plan));
@@ -50,7 +50,7 @@ public class PlanController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<PlanDTO> actualizarPlan(@PathVariable Long id, @RequestBody ActualizarPlanDTO dto) {
+    public ResponseEntity<PlanDTO> actualizarPlan(@PathVariable("id") Long id, @RequestBody ActualizarPlanDTO dto) {
         try {
             Plan planExistente = planService.obtenerPlanPorId(id);
             planMapper.updateEntity(planExistente, dto);
@@ -62,7 +62,7 @@ public class PlanController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> eliminarPlan(@PathVariable Long id) {
+    public ResponseEntity<Void> eliminarPlan(@PathVariable("id") Long id) {
         try {
             planService.eliminarPlan(id);
             return ResponseEntity.noContent().build();

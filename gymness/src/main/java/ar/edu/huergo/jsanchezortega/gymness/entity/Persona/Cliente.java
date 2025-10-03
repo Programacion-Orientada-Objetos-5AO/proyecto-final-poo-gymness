@@ -4,14 +4,12 @@ package ar.edu.huergo.jsanchezortega.gymness.entity.persona;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Size;
 import java.time.LocalDate; // import the LocalDate class
-import java.util.List;
 
 import ar.edu.huergo.jsanchezortega.gymness.entity.plan.Plan;
 import lombok.AllArgsConstructor;
@@ -44,11 +42,7 @@ public class Cliente extends Persona{
     @Past(message = "La fecha de nacimiento debe ser en el pasado")
     private LocalDate fechaNacimiento;
 
-    @ManyToMany
-    @JoinTable(
-        name = "Clientes_Planes",
-        joinColumns = @JoinColumn(name = "cliente_id"),
-        inverseJoinColumns = @JoinColumn(name = "plan_id")
-    )
-    private List<Plan> planes;
+    @ManyToOne
+    @JoinColumn(name = "plan_id") // columna FK en la tabla cliente
+    private Plan plan;
 }

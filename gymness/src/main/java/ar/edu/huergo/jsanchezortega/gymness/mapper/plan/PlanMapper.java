@@ -47,8 +47,10 @@ public class PlanMapper {
         dto.setDescripcion(entity.getDescripcion());
         dto.setPrecio(entity.getPrecio());
         
-        if (entity.getCliente() != null) {
-            dto.setClienteIds(List.of(entity.getCliente().getId()));
+        if (entity.getClientes() != null) {
+            dto.setClienteIds(entity.getClientes().stream()
+                    .map(cliente -> cliente.getId())
+                    .collect(Collectors.toList()));
         }
 
         if (entity.getProfesionales() != null) {

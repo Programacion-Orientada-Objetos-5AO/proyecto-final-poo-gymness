@@ -19,6 +19,7 @@ import ar.edu.huergo.jsanchezortega.gymness.dto.persona.ActualizarClienteDTO;
 import ar.edu.huergo.jsanchezortega.gymness.dto.persona.ClienteDTO;
 import ar.edu.huergo.jsanchezortega.gymness.dto.persona.CrearClienteDTO;
 import ar.edu.huergo.jsanchezortega.gymness.entity.persona.Cliente;
+import ar.edu.huergo.jsanchezortega.gymness.entity.plan.Plan;
 import ar.edu.huergo.jsanchezortega.gymness.mapper.persona.ClienteMapper;
 import ar.edu.huergo.jsanchezortega.gymness.service.persona.ClienteService;
 import jakarta.validation.Valid;
@@ -50,9 +51,9 @@ public class ClienteController {
 
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<ClienteDTO> crearCliente(@Valid @RequestBody CrearClienteDTO crearClienteDTO) {
-        Cliente cliente = clienteMapper.toEntity(crearClienteDTO);
-        Cliente nuevoCliente = clienteService.crearCliente(cliente, crearClienteDTO.getPlanIds());
+    public ResponseEntity<ClienteDTO> crearCliente(@Valid @RequestBody CrearClienteDTO crearClienteDTO, Plan plan) {
+        Cliente cliente = clienteMapper.toEntity(crearClienteDTO, plan);
+        Cliente nuevoCliente = clienteService.crearCliente(cliente, crearClienteDTO.getPlanId());
         ClienteDTO clienteDTO = clienteMapper.toDTO(nuevoCliente);
         return ResponseEntity.ok(clienteDTO);
     }
@@ -64,7 +65,7 @@ public class ClienteController {
             @Valid @RequestBody ActualizarClienteDTO clienteDTO,
             @RequestParam(required = false) List<Long> planIds) {
         Cliente cliente = clienteMapper.toEntity(clienteDTO);
-        Cliente clienteActualizado = clienteService.actualizarCliente(id, cliente, planIds);
+        Cliente clienteActualizado = clienteService.actualizarCliente(id, cliente, clienteDTO.getPlanId());
         ClienteDTO clienteActualizadoDTO = clienteMapper.toDTO(clienteActualizado);
         return ResponseEntity.ok(clienteActualizadoDTO);
     }

@@ -1,5 +1,6 @@
 package ar.edu.huergo.jsanchezortega.gymness.entity.plan;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -9,9 +10,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;
@@ -42,11 +42,14 @@ public class Plan {
     @Positive(message = "El precio debe ser mayor a 0")
     private double precio;
 
-    @ManyToOne
-    @JoinColumn(name = "especialidad_id", nullable = true) 
-    private Cliente cliente;
+    @OneToMany(mappedBy = "plan")
+    private List<Cliente> clientes = new ArrayList<>();
 
     @ManyToMany(mappedBy = "planes")  
     private List<Profesional> profesionales;
+
+    public Plan(String nombre){
+        this.nombre = nombre;
+    }
 
 }

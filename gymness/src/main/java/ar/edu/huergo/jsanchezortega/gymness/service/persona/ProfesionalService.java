@@ -38,7 +38,7 @@ public class ProfesionalService {
             .orElseThrow(() -> new EntityNotFoundException("Especialidad no encontrada"));
         profesional.setEspecialidad(especialidad);
 
-        List<Plan> plans = planService.resolverPlan(planId);
+        List<Plan> plans = planService.resolverPlanes(planId);
 
         if (!plans.isEmpty()) {
             profesional.setPlanes(plans);
@@ -62,9 +62,9 @@ public class ProfesionalService {
                 .orElseThrow(() -> new EntityNotFoundException("Especialidad no encontrada"));
             profesionalExistente.setEspecialidad(especialidad);
         }
-
+        
         if (planIds != null && !planIds.isEmpty()) {
-            List<Plan> plans = planService.resolverPlan(planIds);
+            List<Plan> plans = planService.resolverPlanes(planIds);
             profesionalExistente.setPlanes(plans);
         }
         

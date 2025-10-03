@@ -66,6 +66,12 @@ public class ProfesionalMapper {
             especialidadDTO.setNombre(entity.getEspecialidad().getNombre());
             dto.setEspecialidad(especialidadDTO);
         }
+
+        if(entity.getPlanes() != null){
+            dto.setPlanIds(entity.getPlanes().stream()
+                .map(plan -> plan.getId())
+                .collect(Collectors.toList()));
+        }
         
         return dto;
     }
