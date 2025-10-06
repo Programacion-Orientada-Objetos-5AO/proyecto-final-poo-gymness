@@ -72,7 +72,7 @@ public class ClienteMapper {
             PlanDTO planDTO = new PlanDTO();
             planDTO.setId(entity.getPlan().getId());
             planDTO.setNombre(entity.getPlan().getNombre());
-            dto.setPlan(planDTO);
+            dto.setPlanId(entity.getPlan().getId());
         }
 
         return dto;
