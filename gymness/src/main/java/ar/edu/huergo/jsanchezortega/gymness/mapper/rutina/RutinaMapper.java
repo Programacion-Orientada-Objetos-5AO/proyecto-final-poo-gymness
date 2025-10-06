@@ -52,7 +52,6 @@ public class RutinaMapper {
             OdjetivoRutinaDTO objetivoDTO = new OdjetivoRutinaDTO();
             objetivoDTO.setId(entity.getOdjetivo().getId());
             objetivoDTO.setNombre(entity.getOdjetivo().getNombre());
-            dto.setObjetivo(objetivoDTO);
         }
         
         return dto;

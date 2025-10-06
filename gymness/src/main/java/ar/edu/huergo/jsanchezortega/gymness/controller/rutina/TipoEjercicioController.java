@@ -40,7 +40,7 @@ public class TipoEjercicioController {
 
     @GetMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN') or hasRole('CLIENTE')")
-    public ResponseEntity<TipoEjercicioDTO> obtenerTipoEjercicioPorId(@PathVariable Long id) {
+    public ResponseEntity<TipoEjercicioDTO> obtenerTipoEjercicioPorId(@PathVariable ("id") Long id) {
         TipoEjercicio tipo = tipoEjercicioService.obtenerTipoEjercicioPorId(id);
         TipoEjercicioDTO tipoDTO = new TipoEjercicioDTO(tipo.getId(), tipo.getNombre());
         return ResponseEntity.ok(tipoDTO);
@@ -70,7 +70,7 @@ public class TipoEjercicioController {
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<TipoEjercicioDTO> actualizarTipoEjercicio(
-            @PathVariable Long id, 
+            @PathVariable ("id") Long id, 
             @Valid @RequestBody TipoEjercicioDTO tipoDTO) {
         TipoEjercicio tipo = new TipoEjercicio(tipoDTO.getNombre());
         TipoEjercicio tipoActualizado = tipoEjercicioService.actualizarTipoEjercicio(id, tipo);
@@ -78,8 +78,9 @@ public class TipoEjercicioController {
         return ResponseEntity.ok(tipoActualizadoDTO);
     }
 
-     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> eliminar(@PathVariable Long id) {
+    @PreAuthorize("hasRole('ADMIN')")
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> eliminar(@PathVariable ("id") Long id) {
         tipoEjercicioService.eliminarTipoEjercicio(id); 
         return ResponseEntity.noContent().build();
     }
