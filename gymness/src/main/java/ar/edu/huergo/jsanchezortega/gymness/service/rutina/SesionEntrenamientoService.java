@@ -62,17 +62,7 @@ public class SesionEntrenamientoService {
                 .orElseThrow(() -> new EntityNotFoundException("Sesión de entrenamiento no encontrada"));
 
         sesionExistente.setFechaRealizado(dto.getFechaRealizado());
-        sesionExistente.setDuracion(dto.getDuracion());
-        sesionExistente.setCaloriasQuemadas(dto.getCaloriasQuemadas());
-        sesionExistente.setSeries(dto.getSeries());
-        sesionExistente.setRepeticiones(dto.getRepeticiones());
-        sesionExistente.setPesoUtilizado(dto.getPesoUtilizado());
-        sesionExistente.setRir(dto.getRir());
-
-        if (dto.getEjercicioId() != null) {
-            Ejercicio ejercicio = ejercicioService.obtenerEjercicioId(dto.getEjercicioId());
-            sesionExistente.setEjercicio(ejercicio);
-        }
+    
 
         if (dto.getEstadoId() != null) {
             Estado estado = estadoService.obtenerEstadoPorId(dto.getEstadoId());

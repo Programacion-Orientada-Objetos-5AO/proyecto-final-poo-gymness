@@ -13,12 +13,6 @@ import ar.edu.huergo.jsanchezortega.gymness.entity.rutina.SesionEntrenamiento;
 @Component
 public class SesionEntrenamientoMapper {
 
-    private final EjercicioMapper ejercicioMapper;
-
-    public SesionEntrenamientoMapper(EjercicioMapper ejercicioMapper) {
-        this.ejercicioMapper = ejercicioMapper;
-    }
-
     public SesionEntrenamiento toEntity(SesionEntrenamientoDTO dto) {
         if (dto == null) {
             return null;
@@ -26,12 +20,6 @@ public class SesionEntrenamientoMapper {
         SesionEntrenamiento sesion = new SesionEntrenamiento();
         sesion.setId(dto.getId());
         sesion.setFechaRealizado(dto.getFechaRealizado());
-        sesion.setDuracion(dto.getDuracion());
-        sesion.setCaloriasQuemadas(dto.getCaloriasQuemadas());
-        sesion.setSeries(dto.getSeries());
-        sesion.setRepeticiones(dto.getRepeticiones());
-        sesion.setPesoUtilizado(dto.getPesoUtilizado());
-        sesion.setRir(dto.getRir());
         return sesion;
     }
 
@@ -41,12 +29,6 @@ public class SesionEntrenamientoMapper {
         }
         SesionEntrenamiento sesion = new SesionEntrenamiento();
         sesion.setFechaRealizado(dto.getFechaRealizado());
-        sesion.setDuracion(dto.getDuracion());
-        sesion.setCaloriasQuemadas(dto.getCaloriasQuemadas());
-        sesion.setSeries(dto.getSeries());
-        sesion.setRepeticiones(dto.getRepeticiones());
-        sesion.setPesoUtilizado(dto.getPesoUtilizado());
-        sesion.setRir(dto.getRir());
         return sesion;
     }
 
@@ -58,17 +40,7 @@ public class SesionEntrenamientoMapper {
         SesionEntrenamientoDTO dto = new SesionEntrenamientoDTO();
         dto.setId(entity.getId());
         dto.setFechaRealizado(entity.getFechaRealizado());
-        dto.setDuracion(entity.getDuracion());
-        dto.setCaloriasQuemadas(entity.getCaloriasQuemadas());
-        dto.setSeries(entity.getSeries());
-        dto.setRepeticiones(entity.getRepeticiones());
-        dto.setPesoUtilizado(entity.getPesoUtilizado());
-        dto.setRir(entity.getRir());
         
-        if (entity.getEjercicio() != null) {
-            dto.setEjercicioId(entity.getEjercicio().getId());
-            dto.setEjercicio(ejercicioMapper.toDTO(entity.getEjercicio()));
-        }
         
         if (entity.getEstado() != null) {
             dto.setEstadoId(entity.getEstado().getId());
