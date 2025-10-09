@@ -1,7 +1,7 @@
 package ar.edu.huergo.jsanchezortega.gymness.entity.rutina;
 
 
-import java.time.LocalDate; // import the LocalDate class
+import java.time.LocalDateTime;
 import java.util.List;
 
 import jakarta.persistence.Entity;
@@ -37,7 +37,7 @@ public class Rutina {
     @Size(min = 3, max = 255, message = "La descripcion debe tener entre 3 y 255 caracteres")
     private String descripcion;
 
-    private LocalDate fechaCreacion;
+    private LocalDateTime fechaCreacion = LocalDateTime.now();
 
     @ManyToOne
     @JoinColumn(name = "odjetivo_rutina_id", nullable = false)

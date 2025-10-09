@@ -49,7 +49,7 @@ public class Ejercicio {
     @Column(length = 255)
     private String imagenUrl;
         
-        @Column(nullable = false)
+    @Column(nullable = false)
     private Boolean activo = true;
 
     @ManyToMany

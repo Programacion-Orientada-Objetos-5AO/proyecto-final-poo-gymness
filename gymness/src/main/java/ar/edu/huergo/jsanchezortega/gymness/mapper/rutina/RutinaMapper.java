@@ -1,5 +1,6 @@
 package ar.edu.huergo.jsanchezortega.gymness.mapper.rutina;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,7 +33,7 @@ public class RutinaMapper {
         Rutina rutina = new Rutina();
         rutina.setNombre(dto.getNombre());
         rutina.setDescripcion(dto.getDescripcion());
-        rutina.setFechaCreacion(dto.getFechaCreacion());
+        rutina.setFechaCreacion(LocalDateTime.now());
         return rutina;
     }
 
@@ -52,6 +53,12 @@ public class RutinaMapper {
             OdjetivoRutinaDTO objetivoDTO = new OdjetivoRutinaDTO();
             objetivoDTO.setId(entity.getOdjetivo().getId());
             objetivoDTO.setNombre(entity.getOdjetivo().getNombre());
+        }
+
+        if (entity.getSesiones() != null ) {
+            dto.setSesiones(entity.getSesiones().stream()
+                .map(new SesionEntrenamientoMapper()::toDTO)
+                .collect(Collectors.toList()));
         }
         
         return dto;

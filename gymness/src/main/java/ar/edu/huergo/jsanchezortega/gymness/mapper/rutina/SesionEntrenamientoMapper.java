@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import ar.edu.huergo.jsanchezortega.gymness.dto.rutina.CrearSesionEntrenamiento;
 import ar.edu.huergo.jsanchezortega.gymness.dto.rutina.EstadoDTO;
 import ar.edu.huergo.jsanchezortega.gymness.dto.rutina.SesionEntrenamientoDTO;
+import ar.edu.huergo.jsanchezortega.gymness.entity.rutina.Rutina;
 import ar.edu.huergo.jsanchezortega.gymness.entity.rutina.SesionEntrenamiento;
 
 @Component
@@ -19,6 +20,7 @@ public class SesionEntrenamientoMapper {
         }
         SesionEntrenamiento sesion = new SesionEntrenamiento();
         sesion.setId(dto.getId());
+        sesion.setNombre(dto.getNombre());
         sesion.setFechaRealizado(dto.getFechaRealizado());
         return sesion;
     }
@@ -28,6 +30,7 @@ public class SesionEntrenamientoMapper {
             return null;
         }
         SesionEntrenamiento sesion = new SesionEntrenamiento();
+        sesion.setNombre(dto.getNombre());
         sesion.setFechaRealizado(dto.getFechaRealizado());
         return sesion;
     }
@@ -39,6 +42,7 @@ public class SesionEntrenamientoMapper {
 
         SesionEntrenamientoDTO dto = new SesionEntrenamientoDTO();
         dto.setId(entity.getId());
+        dto.setNombre(entity.getNombre());
         dto.setFechaRealizado(entity.getFechaRealizado());
         
         
@@ -49,7 +53,21 @@ public class SesionEntrenamientoMapper {
             estadoDTO.setNombre(entity.getEstado().getNombre());
             dto.setEstado(estadoDTO);
         }
-        
+
+        if (entity.getRutina() != null) {
+            dto.getRutina().setId(entity.getRutina().getId());
+            Rutina rutina = new Rutina();
+            rutina.setId(entity.getRutina().getId());
+            rutina.setNombre(entity.getRutina().getNombre());
+            dto.setRutina(rutina);
+        }
+
+        if (entity.getEjercicio() != null) {
+            dto.setEjercicio(entity.getEjercicio().stream()
+                .map(new EjercicioSesionMapper()::toDTO)
+                .collect(Collectors.toList()));
+        }
+
         return dto;
     }
 

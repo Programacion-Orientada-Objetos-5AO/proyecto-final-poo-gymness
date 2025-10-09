@@ -1,6 +1,6 @@
 package ar.edu.huergo.jsanchezortega.gymness.dto.rutina;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import jakarta.validation.constraints.NotBlank;
@@ -24,7 +24,7 @@ public class RutinaDTO {
     @Size(min = 3, max = 255, message = "La descripción debe tener entre 3 y 255 caracteres")
     private String descripcion;
     
-    private LocalDate fechaCreacion;
+    private LocalDateTime fechaCreacion = LocalDateTime.now();
     
     @NotNull(message = "El objetivo de la rutina es obligatorio")
     private Long objetivoId;

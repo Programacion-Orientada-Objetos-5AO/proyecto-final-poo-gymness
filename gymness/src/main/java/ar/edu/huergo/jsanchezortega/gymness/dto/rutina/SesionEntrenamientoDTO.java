@@ -5,6 +5,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 import java.time.LocalDateTime;
+import java.util.List;
+
+import ar.edu.huergo.jsanchezortega.gymness.entity.rutina.Rutina;
+
 
 @Data
 @NoArgsConstructor
@@ -13,11 +17,17 @@ public class SesionEntrenamientoDTO {
     private Long id;
     
     @NotNull(message = "La fecha de realización es obligatoria")
+    private String nombre;
+
+    @NotNull(message = "La fecha de realización es obligatoria")
     private LocalDateTime fechaRealizado;
        
     @NotNull(message = "El estado es obligatorio")
     private Long estadoId;
+
+    private Rutina rutina;
     
-    private EjercicioDTO ejercicio;
+    private List<EjercicioSesionDTO> ejercicio;
+
     private EstadoDTO estado;
 }
