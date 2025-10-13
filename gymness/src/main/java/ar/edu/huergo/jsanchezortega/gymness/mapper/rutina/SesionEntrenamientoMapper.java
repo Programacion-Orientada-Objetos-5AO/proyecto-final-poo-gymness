@@ -63,9 +63,11 @@ public class SesionEntrenamientoMapper {
         }
 
         if (entity.getEjercicio() != null) {
-            dto.setEjercicio(entity.getEjercicio().stream()
-                .map(new EjercicioSesionMapper()::toDTO)
-                .collect(Collectors.toList()));
+            dto.setEjercicioIds(
+                entity.getEjercicio().stream()
+                    .map(ejercicioSesion -> ejercicioSesion.getEjercicio().getId())
+                    .collect(Collectors.toList())
+            );
         }
 
         return dto;

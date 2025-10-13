@@ -1,6 +1,7 @@
 package ar.edu.huergo.jsanchezortega.gymness.dto.rutina;
 
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
@@ -16,7 +17,8 @@ import ar.edu.huergo.jsanchezortega.gymness.entity.rutina.Rutina;
 public class SesionEntrenamientoDTO {
     private Long id;
     
-    @NotNull(message = "La fecha de realización es obligatoria")
+    @NotNull(message = "El nombre debe ser obligatoria")
+    @Size(min = 2, max = 100, message = "El nombre debe tener entre 2 y 100 caracteres")
     private String nombre;
 
     @NotNull(message = "La fecha de realización es obligatoria")
@@ -27,7 +29,7 @@ public class SesionEntrenamientoDTO {
 
     private Rutina rutina;
     
-    private List<EjercicioSesionDTO> ejercicio;
+    private List<Long> ejercicioIds;
 
     private EstadoDTO estado;
 }
