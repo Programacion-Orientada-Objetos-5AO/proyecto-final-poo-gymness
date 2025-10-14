@@ -5,27 +5,27 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Component;
 
-import ar.edu.huergo.jsanchezortega.gymness.dto.rutina.CrearSesionEntrenamiento;
+import ar.edu.huergo.jsanchezortega.gymness.dto.rutina.ActualizarSesionEntrenamientoDTO;
+import ar.edu.huergo.jsanchezortega.gymness.dto.rutina.CrearSesionEntrenamientoDTO;
 import ar.edu.huergo.jsanchezortega.gymness.dto.rutina.EstadoDTO;
+import ar.edu.huergo.jsanchezortega.gymness.dto.rutina.RutinaDTO;
 import ar.edu.huergo.jsanchezortega.gymness.dto.rutina.SesionEntrenamientoDTO;
-import ar.edu.huergo.jsanchezortega.gymness.entity.rutina.Rutina;
 import ar.edu.huergo.jsanchezortega.gymness.entity.rutina.SesionEntrenamiento;
 
 @Component
 public class SesionEntrenamientoMapper {
 
-    public SesionEntrenamiento toEntity(SesionEntrenamientoDTO dto) {
+    public SesionEntrenamiento toEntity(ActualizarSesionEntrenamientoDTO dto) {
         if (dto == null) {
             return null;
         }
         SesionEntrenamiento sesion = new SesionEntrenamiento();
-        sesion.setId(dto.getId());
         sesion.setNombre(dto.getNombre());
         sesion.setFechaRealizado(dto.getFechaRealizado());
         return sesion;
     }
 
-    public SesionEntrenamiento toEntity(CrearSesionEntrenamiento dto) {
+    public SesionEntrenamiento toEntity(CrearSesionEntrenamientoDTO dto) {
         if (dto == null) {
             return null;
         }
@@ -55,11 +55,11 @@ public class SesionEntrenamientoMapper {
         }
 
         if (entity.getRutina() != null) {
-            dto.getRutina().setId(entity.getRutina().getId());
-            Rutina rutina = new Rutina();
-            rutina.setId(entity.getRutina().getId());
-            rutina.setNombre(entity.getRutina().getNombre());
-            dto.setRutina(rutina);
+            dto.setRutinaId(entity.getEstado().getId());
+            RutinaDTO rutinaDTO = new RutinaDTO();
+            rutinaDTO.setId(entity.getRutina().getId());
+            rutinaDTO.setNombre(entity.getRutina().getNombre());
+            dto.setRutina(rutinaDTO);
         }
 
         if (entity.getEjercicio() != null) {

@@ -1,81 +1,94 @@
 package ar.edu.huergo.jsanchezortega.gymness.service.rutina;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import ar.edu.huergo.jsanchezortega.gymness.dto.rutina.CrearSesionEntrenamiento;
-import ar.edu.huergo.jsanchezortega.gymness.dto.rutina.SesionEntrenamientoDTO;
-import ar.edu.huergo.jsanchezortega.gymness.entity.rutina.Ejercicio;
-import ar.edu.huergo.jsanchezortega.gymness.entity.rutina.Estado;
 import ar.edu.huergo.jsanchezortega.gymness.entity.rutina.SesionEntrenamiento;
-import ar.edu.huergo.jsanchezortega.gymness.mapper.rutina.SesionEntrenamientoMapper;
+import ar.edu.huergo.jsanchezortega.gymness.entity.rutina.Rutina;
+import ar.edu.huergo.jsanchezortega.gymness.entity.rutina.EjercicioSesion;
+import ar.edu.huergo.jsanchezortega.gymness.entity.rutina.Estado;
 import ar.edu.huergo.jsanchezortega.gymness.repository.rutina.SesionEntrenamientoRepository;
+import ar.edu.huergo.jsanchezortega.gymness.repository.rutina.RutinaRepository;
+import ar.edu.huergo.jsanchezortega.gymness.repository.rutina.EstadoRepository;
 import jakarta.persistence.EntityNotFoundException;
 
 @Service
 public class SesionEntrenamientoService {
 
     @Autowired
-    private SesionEntrenamientoRepository sesionEntrenamientoRepository;
+    private SesionEntrenamientoRepository sesionRepository;
 
     @Autowired
-    private EjercicioService ejercicioService;
+    private RutinaRepository rutinaRepository;
 
     @Autowired
-    private EstadoService estadoService;
+    private EstadoRepository estadoRepository;
 
     @Autowired
-    private SesionEntrenamientoMapper sesionEntrenamientoMapper;
+    private EjercicioSesionService ejercicioSesionService;
 
-    public List<SesionEntrenamientoDTO> obtenerTodasLasSesiones() {
-        List<SesionEntrenamiento> sesiones = sesionEntrenamientoRepository.findAll();
-        return sesionEntrenamientoMapper.toDTOList(sesiones);
+    public List<SesionEntrenamiento> obtenerTodasLasSesiones() {
+        return sesionRepository.findAll();
     }
 
-    public SesionEntrenamientoDTO obtenerSesionPorId(Long id) throws EntityNotFoundException {
-        SesionEntrenamiento sesion = sesionEntrenamientoRepository.findById(id)
+    public SesionEntrenamiento obtenerSesionPorId(Long id) throws EntityNotFoundException {
+        return sesionRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Sesión de entrenamiento no encontrada"));
-        return sesionEntrenamientoMapper.toDTO(sesion);
     }
 
-    public SesionEntrenamientoDTO crearSesion(CrearSesionEntrenamiento dto) {
-        Ejercicio ejercicio = ejercicioService.obtenerEjercicioId(dto.getEjercicioId());
-        Estado estado = estadoService.obtenerEstadoPorId(dto.getEstadoId());
-
-        SesionEntrenamiento sesion = sesionEntrenamientoMapper.toEntity(dto);
-        sesion.setEjercicio(ejercicio);
-        sesion.setEstado(estado);
-
-        if (sesion.getFechaRealizado() == null) {
-            sesion.setFechaRealizado(LocalDateTime.now());
+    public SesionEntrenamiento crearSesion(SesionEntrenamiento sesion, Long rutinaId, Long estadoId, List<Long> ejercicioSesionIds) {
+        if (rutinaId != null) {
+            Rutina rutina = rutinaRepository.findById(rutinaId)
+                    .orElseThrow(() -> new EntityNotFoundException("Rutina no encontrada"));
+            sesion.setRutina(rutina);
         }
 
-        SesionEntrenamiento sesionGuardada = sesionEntrenamientoRepository.save(sesion);
-        return sesionEntrenamientoMapper.toDTO(sesionGuardada);
+        if (estadoId != null) {
+            Estado estado = estadoRepository.findById(estadoId)
+                    .orElseThrow(() -> new EntityNotFoundException("Estado no encontrado"));
+            sesion.setEstado(estado);
+        }
+
+        List<EjercicioSesion> ejercicioSesions = ejercicioSesionService.resolvEjercicioSesions(ejercicioSesionIds);
+
+        if (!ejercicioSesions.isEmpty()) {
+            sesion.setEjercicio(ejercicioSesions);
+        }
+        return sesionRepository.save(sesion);
     }
 
-    public SesionEntrenamientoDTO actualizarSesion(Long id, SesionEntrenamientoDTO dto) {
-        SesionEntrenamiento sesionExistente = sesionEntrenamientoRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Sesión de entrenamiento no encontrada"));
+    public SesionEntrenamiento actualizarSesion(Long id, SesionEntrenamiento sesion, Long rutinaId, Long estadoId, List<Long> ejercicioSesionIds)
+            throws EntityNotFoundException {
 
-        sesionExistente.setFechaRealizado(dto.getFechaRealizado());
-    
+        SesionEntrenamiento sesionExistente = obtenerSesionPorId(id);
 
-        if (dto.getEstadoId() != null) {
-            Estado estado = estadoService.obtenerEstadoPorId(dto.getEstadoId());
+        sesionExistente.setNombre(sesion.getNombre());
+        sesionExistente.setFechaRealizado(sesion.getFechaRealizado());
+
+        if (rutinaId != null) {
+            Rutina rutina = rutinaRepository.findById(rutinaId)
+                    .orElseThrow(() -> new EntityNotFoundException("Rutina no encontrada"));
+            sesionExistente.setRutina(rutina);
+        }
+
+        if (estadoId != null) {
+            Estado estado = estadoRepository.findById(estadoId)
+                    .orElseThrow(() -> new EntityNotFoundException("Estado no encontrado"));
             sesionExistente.setEstado(estado);
         }
 
-        SesionEntrenamiento sesionActualizada = sesionEntrenamientoRepository.save(sesionExistente);
-        return sesionEntrenamientoMapper.toDTO(sesionActualizada);
+        if (ejercicioSesionIds != null && !ejercicioSesionIds.isEmpty()) {
+            List<EjercicioSesion> ejercicioSesions = ejercicioSesionService.resolvEjercicioSesions(ejercicioSesionIds);
+            sesionExistente.setEjercicio(ejercicioSesions);
+        }
+
+        return sesionRepository.save(sesionExistente);
     }
 
     public void eliminarSesion(Long id) throws EntityNotFoundException {
-        SesionEntrenamiento sesion = sesionEntrenamientoRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Sesión de entrenamiento no encontrada"));
-        sesionEntrenamientoRepository.delete(sesion);
+        SesionEntrenamiento sesion = obtenerSesionPorId(id);
+        sesionRepository.delete(sesion);
     }
 }

@@ -1,20 +1,27 @@
 package ar.edu.huergo.jsanchezortega.gymness.mapper.rutina;
 
+import ar.edu.huergo.jsanchezortega.gymness.dto.rutina.ActualizarEjercicioSesionDTO;
+import ar.edu.huergo.jsanchezortega.gymness.dto.rutina.CrearEjercicioSesionDTO;
 import ar.edu.huergo.jsanchezortega.gymness.dto.rutina.EjercicioSesionDTO;
 import ar.edu.huergo.jsanchezortega.gymness.entity.rutina.EjercicioSesion;
 import ar.edu.huergo.jsanchezortega.gymness.entity.rutina.Ejercicio;
 import ar.edu.huergo.jsanchezortega.gymness.entity.rutina.SesionEntrenamiento;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
+import java.util.List;
+
+@Component
+@RequiredArgsConstructor
 public class EjercicioSesionMapper {
 
-    // DTO → Entidad
-    public static EjercicioSesion toEntity(EjercicioSesionDTO dto) {
+    // CrearEjercicioSesionDTO → Entidad
+    public EjercicioSesion toEntity(CrearEjercicioSesionDTO dto) {
         if (dto == null) {
             return null;
         }
 
         EjercicioSesion entity = new EjercicioSesion();
-        entity.setId(dto.getId());
         entity.setDuracion(dto.getDuracion());
         entity.setCaloriasQuemadas(dto.getCaloriasQuemadas());
         entity.setSeries(dto.getSeries());
@@ -23,19 +30,53 @@ public class EjercicioSesionMapper {
         entity.setRir(dto.getRir());
 
         // Relación con otras entidades
-        SesionEntrenamiento sesion = new SesionEntrenamiento();
-        sesion.setId(dto.getSesionId());
-        entity.setSesion(sesion);
+        if (dto.getSesionId() != null) {
+            SesionEntrenamiento sesion = new SesionEntrenamiento();
+            sesion.setId(dto.getSesionId());
+            entity.setSesion(sesion);
+        }
 
-        Ejercicio ejercicio = new Ejercicio();
-        ejercicio.setId(dto.getEjercicioId());
-        entity.setEjercicio(ejercicio);
+        if (dto.getEjercicioId() != null) {
+            Ejercicio ejercicio = new Ejercicio();
+            ejercicio.setId(dto.getEjercicioId());
+            entity.setEjercicio(ejercicio);
+        }
+
+        return entity;
+    }
+
+    // ActualizarEjercicioSesionDTO → Entidad
+    public EjercicioSesion toEntity(ActualizarEjercicioSesionDTO dto) {
+        if (dto == null) {
+            return null;
+        }
+
+        EjercicioSesion entity = new EjercicioSesion();
+        entity.setDuracion(dto.getDuracion());
+        entity.setCaloriasQuemadas(dto.getCaloriasQuemadas());
+        entity.setSeries(dto.getSeries());
+        entity.setRepeticiones(dto.getRepeticiones());
+        entity.setPesoUtilizado(dto.getPesoUtilizado());
+        entity.setRir(dto.getRir());
+
+        // Relación con otras entidades
+        if (dto.getSesionId() != null) {
+            SesionEntrenamiento sesion = new SesionEntrenamiento();
+            sesion.setId(dto.getSesionId());
+            entity.setSesion(sesion);
+        }
+
+        if (dto.getEjercicioId() != null) {
+            Ejercicio ejercicio = new Ejercicio();
+            ejercicio.setId(dto.getEjercicioId());
+            entity.setEjercicio(ejercicio);
+        }
 
         return entity;
     }
 
     // Entidad → DTO
-    public static EjercicioSesionDTO toDTO(EjercicioSesion entity) {
+    public EjercicioSesionDTO toDTO(EjercicioSesion entity) {
         if (entity == null) {
             return null;
         }
@@ -58,5 +99,27 @@ public class EjercicioSesionMapper {
         }
 
         return dto;
+    }
+
+    // Lista de Entidades → Lista de DTOs
+    public List<EjercicioSesionDTO> toDTOList(List<EjercicioSesion> entities) {
+        if (entities == null) {
+            return List.of();
+        }
+
+        return entities.stream()
+            .map(this::toDTO)
+            .toList();
+    }
+
+    // Lista de DTOs → Lista de Entidades
+    public List<EjercicioSesion> toEntityList(List<CrearEjercicioSesionDTO> dtos) {
+        if (dtos == null) {
+            return List.of();
+        }
+
+        return dtos.stream()
+            .map(this::toEntity)
+            .toList();
     }
 }

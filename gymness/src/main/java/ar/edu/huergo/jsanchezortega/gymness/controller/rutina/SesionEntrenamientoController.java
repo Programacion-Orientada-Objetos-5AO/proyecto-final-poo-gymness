@@ -2,76 +2,61 @@ package ar.edu.huergo.jsanchezortega.gymness.controller.rutina;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
 
-import ar.edu.huergo.jsanchezortega.gymness.dto.rutina.CrearSesionEntrenamiento;
+import ar.edu.huergo.jsanchezortega.gymness.dto.rutina.ActualizarSesionEntrenamientoDTO;
+import ar.edu.huergo.jsanchezortega.gymness.dto.rutina.CrearSesionEntrenamientoDTO;
 import ar.edu.huergo.jsanchezortega.gymness.dto.rutina.SesionEntrenamientoDTO;
+import ar.edu.huergo.jsanchezortega.gymness.entity.rutina.SesionEntrenamiento;
+import ar.edu.huergo.jsanchezortega.gymness.mapper.rutina.SesionEntrenamientoMapper;
 import ar.edu.huergo.jsanchezortega.gymness.service.rutina.SesionEntrenamientoService;
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/api/sesiones-entrenamiento")
+@RequiredArgsConstructor
+@RequestMapping("/api/sesiones")
 public class SesionEntrenamientoController {
 
-    @Autowired
-    private SesionEntrenamientoService sesionEntrenamientoService;
-
+    private final SesionEntrenamientoService sesionService;    
+    private final SesionEntrenamientoMapper sesionEntrenamientoMapper;
+    
     @GetMapping
+    @PreAuthorize("hasRole('ADMIN') or hasRole('PROFESIONAL')")
     public ResponseEntity<List<SesionEntrenamientoDTO>> obtenerTodasLasSesiones() {
-        List<SesionEntrenamientoDTO> sesiones = sesionEntrenamientoService.obtenerTodasLasSesiones();
-        return ResponseEntity.ok(sesiones);
+        List<SesionEntrenamiento> sesiones = sesionService.obtenerTodasLasSesiones();
+        return ResponseEntity.ok(sesionEntrenamientoMapper.toDTOList(sesiones));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<SesionEntrenamientoDTO> obtenerSesionPorId(@PathVariable Long id) {
-        try {
-            SesionEntrenamientoDTO sesion = sesionEntrenamientoService.obtenerSesionPorId(id);
-            return ResponseEntity.ok(sesion);
-        } catch (EntityNotFoundException e) {
-            return ResponseEntity.notFound().build();
-        }
+    @PreAuthorize("hasRole('ADMIN') or hasRole('PROFESIONAL')")
+    public ResponseEntity<SesionEntrenamientoDTO> obtenerSesionesPorId(@PathVariable ("id") Long id){
+        SesionEntrenamiento sesionEntrenamiento = sesionService.obtenerSesionPorId(id);
+        return ResponseEntity.ok(sesionEntrenamientoMapper.toDTO(sesionEntrenamiento));
     }
 
     @PostMapping
-    public ResponseEntity<SesionEntrenamientoDTO> crearSesion(@Valid @RequestBody CrearSesionEntrenamiento dto) {
-        try {
-            SesionEntrenamientoDTO sesionCreada = sesionEntrenamientoService.crearSesion(dto);
-            return ResponseEntity.status(HttpStatus.CREATED).body(sesionCreada);
-        } catch (EntityNotFoundException e) {
-            return ResponseEntity.badRequest().build();
-        }
+    @PreAuthorize("hasRole('ADMIN') or hasRole('PROFESIONAL')")
+    public ResponseEntity<SesionEntrenamientoDTO> crearSesion(@Valid @RequestBody CrearSesionEntrenamientoDTO dto){
+        SesionEntrenamiento sesion = sesionEntrenamientoMapper.toEntity(dto);
+        SesionEntrenamiento nuevo = sesionService.crearSesion(sesion, dto.getRutinaId(), dto.getEstadoId(), dto.getEjercicioIds());
+        return ResponseEntity.ok(sesionEntrenamientoMapper.toDTO(nuevo));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<SesionEntrenamientoDTO> actualizarSesion(
-            @PathVariable Long id,
-            @Valid @RequestBody SesionEntrenamientoDTO dto) {
-        try {
-            SesionEntrenamientoDTO sesionActualizada = sesionEntrenamientoService.actualizarSesion(id, dto);
-            return ResponseEntity.ok(sesionActualizada);
-        } catch (EntityNotFoundException e) {
-            return ResponseEntity.notFound().build();
-        }
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<SesionEntrenamientoDTO> actualizarSesion(@PathVariable("id") Long id, @Valid @RequestBody ActualizarSesionEntrenamientoDTO dto){
+        SesionEntrenamiento sesion = sesionEntrenamientoMapper.toEntity(dto);
+        SesionEntrenamiento actualizado = sesionService.actualizarSesion(id, sesion, dto.getRutinaId(), dto.getEstadoId(), dto.getEjercicioIds());
+        return ResponseEntity.ok(sesionEntrenamientoMapper.toDTO(actualizado));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> eliminarSesion(@PathVariable Long id) {
-        try {
-            sesionEntrenamientoService.eliminarSesion(id);
-            return ResponseEntity.noContent().build();
-        } catch (EntityNotFoundException e) {
-            return ResponseEntity.notFound().build();
-        }
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<Void> eliminar(@PathVariable("id") Long id) {
+        sesionService.eliminarSesion(id);
+        return ResponseEntity.noContent().build();
     }
 }

@@ -3,7 +3,6 @@ package ar.edu.huergo.jsanchezortega.gymness.dto.rutina;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import ar.edu.huergo.jsanchezortega.gymness.entity.rutina.Rutina;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,7 +12,7 @@ import lombok.AllArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 
-public class CrearSesionEntrenamiento {
+public class CrearSesionEntrenamientoDTO {
     @NotNull(message = "La fecha de realización es obligatoria")
     private String nombre;
 
@@ -23,9 +22,11 @@ public class CrearSesionEntrenamiento {
     @NotNull(message = "El estado es obligatorio")
     private Long estadoId;
 
-    private Rutina rutina;
+    private Long rutinaId;
+
+    private RutinaDTO rutina;
     
-    private List<EjercicioSesionDTO> ejercicio;
+    private List<Long> ejercicioIds;
 
     private EstadoDTO estado;
 }
