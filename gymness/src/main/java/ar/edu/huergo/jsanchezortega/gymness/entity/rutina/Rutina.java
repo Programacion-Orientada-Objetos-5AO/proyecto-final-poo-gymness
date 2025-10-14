@@ -38,11 +38,12 @@ public class Rutina {
     private String descripcion;
 
     private LocalDateTime fechaCreacion = LocalDateTime.now();
+    
 
     @ManyToOne
     @JoinColumn(name = "odjetivo_rutina_id", nullable = false)
     private OdjetivoRutina odjetivo; // Mantenimiento, Bajar de peso, Ganar musculo
     
-    @OneToMany(mappedBy = "Rutina")
+    @OneToMany(mappedBy = "rutina")
     private List<SesionEntrenamiento> sesiones;
 }

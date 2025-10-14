@@ -8,7 +8,6 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 public interface EjercicioSesionRepository extends JpaRepository<EjercicioSesion, Long> {
@@ -17,8 +16,6 @@ public interface EjercicioSesionRepository extends JpaRepository<EjercicioSesion
     List<EjercicioSesion> findBySesionId(@Param("sesionId") Long sesionId);
     List<EjercicioSesion> findByEjercicio(Ejercicio ejercicio);
     List<EjercicioSesion> findBySesionAndEjercicio(SesionEntrenamiento sesion, Ejercicio ejercicio);
-    Optional<Integer> sumDuracionBySesionId(@Param("sesionId") Long sesionId);
-    Optional<Double> avgPesoBySesionId(@Param("sesionId") Long sesionId);
     boolean existsBySesionAndEjercicio(SesionEntrenamiento sesion, Ejercicio ejercicio);
     void deleteBySesion(SesionEntrenamiento sesion);
     int countBySesion(SesionEntrenamiento sesion);
