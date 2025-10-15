@@ -1,6 +1,7 @@
 package ar.edu.huergo.jsanchezortega.gymness.service.rutina;
 
 import java.util.List;
+import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -90,5 +91,18 @@ public class SesionEntrenamientoService {
     public void eliminarSesion(Long id) throws EntityNotFoundException {
         SesionEntrenamiento sesion = obtenerSesionPorId(id);
         sesionRepository.delete(sesion);
+    }
+
+    public List<SesionEntrenamiento> resolveSesionEntrenamientos(List<Long> sesionEntrenamientoIds) throws EntityNotFoundException{
+        if (sesionEntrenamientoIds == null || sesionEntrenamientoIds.isEmpty()) {
+            throw new IllegalArgumentException("Debe ser al menos una sesion de entrenamiento");            
+        }
+
+        List<SesionEntrenamiento> sesionEntrenamientos = sesionRepository.findAllById(sesionEntrenamientoIds);
+        if (sesionEntrenamientos.size() != sesionEntrenamientoIds.stream().filter(Objects::nonNull).distinct()
+                .count()) {
+            throw new EntityNotFoundException("Una o mas sesione no existen");
+        }
+        return sesionEntrenamientos;
     }
 }
