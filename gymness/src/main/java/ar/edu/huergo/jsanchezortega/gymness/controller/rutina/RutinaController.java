@@ -32,8 +32,8 @@ public class RutinaController {
     @PostMapping
     public ResponseEntity<Rutina> crearRutina(
             @RequestBody Rutina rutina,
-            @RequestParam(required = false) Long odjetivoRutinaId,
-            @RequestParam(required = false) List<Long> sesionEntrenamientoIds) {
+            @RequestParam(name = "odjetivoRutinaId", required = false) Long odjetivoRutinaId,
+            @RequestParam(name = "sesionEntrenamientoIds", required = false) List<Long> sesionEntrenamientoIds) {
 
         Rutina nuevaRutina = rutinaService.crearRutina(rutina, odjetivoRutinaId, sesionEntrenamientoIds);
         return ResponseEntity.status(HttpStatus.CREATED).body(nuevaRutina);

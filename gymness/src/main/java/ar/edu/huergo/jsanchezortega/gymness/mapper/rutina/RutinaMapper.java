@@ -4,15 +4,21 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import ar.edu.huergo.jsanchezortega.gymness.dto.rutina.CrearRutinaDTO;
 import ar.edu.huergo.jsanchezortega.gymness.dto.rutina.OdjetivoRutinaDTO;
 import ar.edu.huergo.jsanchezortega.gymness.dto.rutina.RutinaDTO;
+import ar.edu.huergo.jsanchezortega.gymness.entity.rutina.OdjetivoRutina;
 import ar.edu.huergo.jsanchezortega.gymness.entity.rutina.Rutina;
+import ar.edu.huergo.jsanchezortega.gymness.repository.rutina.OdjetivoRutinaRepository;
 
 @Component
 public class RutinaMapper {
+
+    @Autowired
+    private OdjetivoRutinaRepository odjetivoRutinaRepository;
 
     public Rutina toEntity(RutinaDTO dto) {
         if (dto == null) {
@@ -26,7 +32,7 @@ public class RutinaMapper {
         return rutina;
     }
 
-    public Rutina toEntity(CrearRutinaDTO dto) {
+     public Rutina toEntity(CrearRutinaDTO dto) {
         if (dto == null) {
             return null;
         }
@@ -34,6 +40,13 @@ public class RutinaMapper {
         rutina.setNombre(dto.getNombre());
         rutina.setDescripcion(dto.getDescripcion());
         rutina.setFechaCreacion(LocalDateTime.now());
+
+        if (dto.getObjetivoId() != null) {
+            OdjetivoRutina objetivo = odjetivoRutinaRepository.findById(dto.getObjetivoId())
+                .orElseThrow(() -> new RuntimeException("Objetivo no encontrado"));
+            rutina.setOdjetivo(objetivo);
+        }
+
         return rutina;
     }
 

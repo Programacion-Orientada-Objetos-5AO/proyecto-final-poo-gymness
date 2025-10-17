@@ -41,7 +41,7 @@ public class Rutina {
     
 
     @ManyToOne
-    @JoinColumn(name = "odjetivo_rutina_id", nullable = false)
+    @JoinColumn(name = "odjetivo_rutina_id", nullable = true)
     private OdjetivoRutina odjetivo; // Mantenimiento, Bajar de peso, Ganar musculo
     
     @OneToMany(mappedBy = "rutina")

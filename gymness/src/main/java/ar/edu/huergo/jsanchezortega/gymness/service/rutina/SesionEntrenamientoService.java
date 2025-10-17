@@ -1,5 +1,6 @@
 package ar.edu.huergo.jsanchezortega.gymness.service.rutina;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -95,7 +96,7 @@ public class SesionEntrenamientoService {
 
     public List<SesionEntrenamiento> resolveSesionEntrenamientos(List<Long> sesionEntrenamientoIds) throws EntityNotFoundException{
         if (sesionEntrenamientoIds == null || sesionEntrenamientoIds.isEmpty()) {
-            throw new IllegalArgumentException("Debe ser al menos una sesion de entrenamiento");            
+                return new ArrayList<>(); 
         }
 
         List<SesionEntrenamiento> sesionEntrenamientos = sesionRepository.findAllById(sesionEntrenamientoIds);

@@ -60,10 +60,4 @@ public class EjercicioSesionController {
         return ResponseEntity.noContent().build();
     }
 
-    @PostMapping("/resolver")
-    @PreAuthorize("hasRole('ADMIN') or hasRole('PROFESIONAL')")
-    public ResponseEntity<List<EjercicioSesionDTO>> resolver(@RequestBody List<Long> ids) {
-        List<EjercicioSesion> ejercicios = ejercicioSesionService.resolvEjercicioSesions(ids);
-        return ResponseEntity.ok(ejercicioSesionMapper.toDTOList(ejercicios));
-    }
 }

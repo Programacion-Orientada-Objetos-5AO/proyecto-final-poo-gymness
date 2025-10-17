@@ -1,6 +1,7 @@
 package ar.edu.huergo.jsanchezortega.gymness.dto.rutina;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -26,6 +27,9 @@ public class CrearRutinaDTO {
     private LocalDate fechaCreacion;
     
     @NotNull(message = "El objetivo de la rutina es obligatorio")
-    private Long objetivoId;
+    private Long objetivoId; 
+
+    private List<Long> sesionEntrenamientoIds;
+
     
 }
