@@ -10,7 +10,7 @@ import ar.edu.huergo.jsanchezortega.gymness.entity.rutina.SesionEntrenamiento;
 
 @Repository
 public interface SesionEntrenamientoRepository extends JpaRepository<SesionEntrenamiento, Long> {
-    List<SesionEntrenamiento> findByEjercicioId(Long ejercicioId);
+    List<SesionEntrenamiento> findByEjercicios_Id(Long ejercicioId);
     Optional<SesionEntrenamiento> findByEstadoId(Long estadoId);
     List<SesionEntrenamiento> findByFechaRealizadoBetween(LocalDateTime fechaInicio, LocalDateTime fechaFin);
     List<SesionEntrenamiento> findByFechaRealizadoAfter(LocalDateTime fecha);

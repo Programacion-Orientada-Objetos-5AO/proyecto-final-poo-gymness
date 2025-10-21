@@ -4,6 +4,7 @@ package ar.edu.huergo.jsanchezortega.gymness.entity.rutina;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import ar.edu.huergo.jsanchezortega.gymness.entity.persona.Cliente;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -46,4 +47,9 @@ public class Rutina {
     
     @OneToMany(mappedBy = "rutina")
     private List<SesionEntrenamiento> sesiones;
+
+    @ManyToOne
+    @JoinColumn(name = "cliente_id") // FK a cliente
+    private Cliente cliente;
+
 }

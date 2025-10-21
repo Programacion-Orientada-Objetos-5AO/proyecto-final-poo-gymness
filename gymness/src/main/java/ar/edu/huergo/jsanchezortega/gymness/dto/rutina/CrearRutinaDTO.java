@@ -31,5 +31,5 @@ public class CrearRutinaDTO {
 
     private List<Long> sesionEntrenamientoIds;
 
-    
+    private Long clienteId;
 }

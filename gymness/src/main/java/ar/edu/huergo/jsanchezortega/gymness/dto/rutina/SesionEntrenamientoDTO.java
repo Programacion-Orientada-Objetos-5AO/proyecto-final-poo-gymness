@@ -20,8 +20,7 @@ public class SesionEntrenamientoDTO {
     @Size(min = 2, max = 100, message = "El nombre debe tener entre 2 y 100 caracteres")
     private String nombre;
 
-    @NotNull(message = "La fecha de realización es obligatoria")
-    private LocalDateTime fechaRealizado;
+    private LocalDateTime fechaRealizado = LocalDateTime.now();;
        
     @NotNull(message = "El estado es obligatorio")
     private Long estadoId;

@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -38,6 +39,8 @@ public class CrearClienteDTO {
     
     @NotNull(message = "Es obligatorio poner la fecha de nacimiento")
     private LocalDate fechaNacimiento;
+
+    private List<Long> rutinasIds;
 
     private Long planId;
 }

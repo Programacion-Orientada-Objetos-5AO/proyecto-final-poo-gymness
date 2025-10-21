@@ -9,6 +9,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 import java.time.LocalDate;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -35,6 +36,6 @@ public class ClienteDTO extends PersonaDTO {
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate fechaNacimiento;
 
-    
+    private List<Long> rutinasIds;
     private Long planId;
 }

@@ -39,10 +39,10 @@ public class SesionEntrenamiento {
     private Rutina rutina;
     
     @OneToMany (mappedBy = "sesion")
-    private List<EjercicioSesion> ejercicio;
+    private List<EjercicioSesion> ejercicios;
     
     @Column(nullable = false)
-    private LocalDateTime fechaRealizado;
+    private LocalDateTime fechaRealizado = LocalDateTime.now();
 
     @ManyToOne
     @JoinColumn(name = "estado_id", nullable = false)

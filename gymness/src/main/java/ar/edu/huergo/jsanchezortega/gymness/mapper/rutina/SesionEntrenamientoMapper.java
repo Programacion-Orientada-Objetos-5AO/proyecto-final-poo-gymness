@@ -62,9 +62,9 @@ public class SesionEntrenamientoMapper {
             dto.setRutina(rutinaDTO);
         }
 
-        if (entity.getEjercicio() != null) {
+        if (entity.getEjercicios() != null) {
             dto.setEjercicioIds(
-                entity.getEjercicio().stream()
+                entity.getEjercicios().stream()
                     .map(ejercicioSesion -> ejercicioSesion.getEjercicio().getId())
                     .collect(Collectors.toList())
             );

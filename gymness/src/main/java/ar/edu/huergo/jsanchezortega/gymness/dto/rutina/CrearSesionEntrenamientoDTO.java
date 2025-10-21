@@ -16,8 +16,7 @@ public class CrearSesionEntrenamientoDTO {
     @NotNull(message = "La fecha de realización es obligatoria")
     private String nombre;
 
-    @NotNull(message = "La fecha de realización es obligatoria")
-    private LocalDateTime fechaRealizado;
+    private LocalDateTime fechaRealizado = LocalDateTime.now();;
        
     @NotNull(message = "El estado es obligatorio")
     private Long estadoId;

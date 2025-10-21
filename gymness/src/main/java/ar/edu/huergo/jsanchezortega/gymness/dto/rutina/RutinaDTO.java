@@ -29,6 +29,7 @@ public class RutinaDTO {
     @NotNull(message = "El objetivo de la rutina es obligatorio")
     private Long objetivoId;
 
-    private List<SesionEntrenamientoDTO> sesiones;
-    
+    private List<Long> sesionEntrenamientoIds;
+
+    private Long clienteId;    
 }

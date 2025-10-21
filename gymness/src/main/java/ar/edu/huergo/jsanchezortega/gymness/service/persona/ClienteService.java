@@ -28,13 +28,12 @@ public class ClienteService {
             .orElseThrow(() -> new EntityNotFoundException("Cliente no encontrado"));
     }
 
-public Cliente crearCliente(Cliente cliente, Long planId) {
-    Plan plan = planService.resolverPlan(planId);
-    // asignar el único plan al cliente
-    cliente.setPlan(plan);
+    public Cliente crearCliente(Cliente cliente, Long planId) {
+        Plan plan = planService.resolverPlan(planId);
+        cliente.setPlan(plan);
 
-    return clienteRepository.save(cliente);
-}
+        return clienteRepository.save(cliente);
+    }
 
     public Cliente actualizarCliente(Long id, Cliente cliente, Long planId) throws EntityNotFoundException {
         Cliente clienteExistente = obtenerClientePorId(id);
@@ -53,5 +52,14 @@ public Cliente crearCliente(Cliente cliente, Long planId) {
     public void eliminarCliente(Long id) throws EntityNotFoundException {
         Cliente cliente = obtenerClientePorId(id);
         clienteRepository.delete(cliente);
+    }
+
+    public Cliente resolverPlan(Long clienteId) throws IllegalArgumentException, EntityNotFoundException {
+        if (clienteId == null) {
+            throw new IllegalArgumentException("El ID del plan no puede ser nulo");
+        }
+
+        return clienteRepository.findById(clienteId)
+                .orElseThrow(() -> new EntityNotFoundException("El plan con ID " + clienteId + " no existe"));
     }
 }

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import ar.edu.huergo.jsanchezortega.gymness.dto.rutina.CrearRutinaDTO;
 import ar.edu.huergo.jsanchezortega.gymness.dto.rutina.OdjetivoRutinaDTO;
 import ar.edu.huergo.jsanchezortega.gymness.dto.rutina.RutinaDTO;
+import ar.edu.huergo.jsanchezortega.gymness.entity.persona.Cliente;
 import ar.edu.huergo.jsanchezortega.gymness.entity.rutina.OdjetivoRutina;
 import ar.edu.huergo.jsanchezortega.gymness.entity.rutina.Rutina;
 import ar.edu.huergo.jsanchezortega.gymness.repository.rutina.OdjetivoRutinaRepository;
@@ -32,7 +33,7 @@ public class RutinaMapper {
         return rutina;
     }
 
-     public Rutina toEntity(CrearRutinaDTO dto) {
+     public Rutina toEntity(CrearRutinaDTO dto, Cliente cliente) {
         if (dto == null) {
             return null;
         }
@@ -40,6 +41,7 @@ public class RutinaMapper {
         rutina.setNombre(dto.getNombre());
         rutina.setDescripcion(dto.getDescripcion());
         rutina.setFechaCreacion(LocalDateTime.now());
+        rutina.setCliente(cliente);
 
         if (dto.getObjetivoId() != null) {
             OdjetivoRutina objetivo = odjetivoRutinaRepository.findById(dto.getObjetivoId())
@@ -69,8 +71,8 @@ public class RutinaMapper {
         }
 
         if (entity.getSesiones() != null ) {
-            dto.setSesiones(entity.getSesiones().stream()
-                .map(new SesionEntrenamientoMapper()::toDTO)
+            dto.setSesionEntrenamientoIds(entity.getSesiones().stream()
+                .map(sesion -> sesion.getId())
                 .collect(Collectors.toList()));
         }
         

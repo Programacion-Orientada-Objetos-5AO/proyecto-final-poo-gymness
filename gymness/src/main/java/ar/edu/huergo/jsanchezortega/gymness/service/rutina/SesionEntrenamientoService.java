@@ -56,7 +56,7 @@ public class SesionEntrenamientoService {
         List<EjercicioSesion> ejercicioSesions = ejercicioSesionService.resolvEjercicioSesions(ejercicioSesionIds);
 
         if (!ejercicioSesions.isEmpty()) {
-            sesion.setEjercicio(ejercicioSesions);
+            sesion.setEjercicios(ejercicioSesions);
         }
         return sesionRepository.save(sesion);
     }
@@ -83,7 +83,7 @@ public class SesionEntrenamientoService {
 
         if (ejercicioSesionIds != null && !ejercicioSesionIds.isEmpty()) {
             List<EjercicioSesion> ejercicioSesions = ejercicioSesionService.resolvEjercicioSesions(ejercicioSesionIds);
-            sesionExistente.setEjercicio(ejercicioSesions);
+            sesionExistente.setEjercicios(ejercicioSesions);
         }
 
         return sesionRepository.save(sesionExistente);

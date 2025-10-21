@@ -1,17 +1,22 @@
 package ar.edu.huergo.jsanchezortega.gymness.entity.persona;
 
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Size;
 import java.time.LocalDate; // import the LocalDate class
+import java.util.ArrayList;
+import java.util.List;
 
 import ar.edu.huergo.jsanchezortega.gymness.entity.plan.Plan;
+import ar.edu.huergo.jsanchezortega.gymness.entity.rutina.Rutina;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -45,4 +50,10 @@ public class Cliente extends Persona{
     @ManyToOne
     @JoinColumn(name = "plan_id") // columna FK en la tabla cliente
     private Plan plan;
+
+    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
+    private List<Rutina> rutinas = new ArrayList<>();
+
+
+
 }

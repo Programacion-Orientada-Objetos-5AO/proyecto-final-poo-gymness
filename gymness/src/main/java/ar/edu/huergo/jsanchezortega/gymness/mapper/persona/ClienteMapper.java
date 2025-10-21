@@ -75,6 +75,11 @@ public class ClienteMapper {
             dto.setPlanId(entity.getPlan().getId());
         }
 
+        if (entity.getRutinas() != null) {
+            dto.setRutinasIds(entity.getRutinas().stream()
+                .map(rutina -> rutina.getId())
+                .collect(Collectors.toList()));
+        }
         return dto;
     }
 
