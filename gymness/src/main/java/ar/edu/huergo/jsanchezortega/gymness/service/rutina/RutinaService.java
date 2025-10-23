@@ -47,7 +47,7 @@ public class RutinaService {
             rutina.setOdjetivo(odjetivoRutina);
         }
 
-        Cliente cliente = clienteService.resolverPlan(clienteId);
+        Cliente cliente = clienteService.resolverCliente(clienteId);
         rutina.setCliente(cliente);
 
         List<SesionEntrenamiento> sesionEntrenamientos = sesionEntrenamientoService.resolveSesionEntrenamientos(SesionEntrenamientoIds);
@@ -64,14 +64,14 @@ public class RutinaService {
         rutinaExistente.setNombre(rutina.getNombre());
         rutinaExistente.setDescripcion(rutina.getDescripcion());
         rutinaExistente.setFechaCreacion(rutina.getFechaCreacion());
-        rutinaExistente.setCliente(rutina.getCliente());
         
         if (sesionEntrenamientoIds != null && !sesionEntrenamientoIds.isEmpty()) {
             List<SesionEntrenamiento> sesionEntrenamientos = sesionEntrenamientoService.resolveSesionEntrenamientos(sesionEntrenamientoIds);
             rutinaExistente.setSesiones(sesionEntrenamientos);
         }
 
-        
+        Cliente cliente = clienteService.resolverCliente(clienteId);
+        rutinaExistente.setCliente(cliente);
 
         if (odjetivoRutinaId != null) {
             OdjetivoRutina odjetivoRutina = odjetivoRutinaRepository.findById(odjetivoRutinaId)

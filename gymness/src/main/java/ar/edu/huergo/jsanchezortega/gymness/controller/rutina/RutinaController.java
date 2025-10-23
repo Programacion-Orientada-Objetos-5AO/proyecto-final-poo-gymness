@@ -48,7 +48,7 @@ public class RutinaController {
 
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<RutinaDTO> actualizarRutina(@PathVariable ("id") Long id, @RequestBody RutinaDTO dto, Long clienteId) {
+    public ResponseEntity<RutinaDTO> actualizarRutina(@PathVariable ("id") Long id, @RequestBody RutinaDTO dto) {
         Rutina rutina = rutinaMapper.toEntity(dto);
         Rutina rutinaActualizada = rutinaService.actualizarRutina(id, rutina, dto.getObjetivoId(), dto.getSesionEntrenamientoIds(), dto.getClienteId());
         return ResponseEntity.ok(rutinaMapper.toDTO(rutinaActualizada));

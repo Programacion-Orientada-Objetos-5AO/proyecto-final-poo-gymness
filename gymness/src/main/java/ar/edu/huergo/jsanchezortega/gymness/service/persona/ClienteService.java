@@ -54,9 +54,9 @@ public class ClienteService {
         clienteRepository.delete(cliente);
     }
 
-    public Cliente resolverPlan(Long clienteId) throws IllegalArgumentException, EntityNotFoundException {
+    public Cliente resolverCliente(Long clienteId) throws IllegalArgumentException, EntityNotFoundException {
         if (clienteId == null) {
-            throw new IllegalArgumentException("El ID del plan no puede ser nulo");
+            return null;
         }
 
         return clienteRepository.findById(clienteId)
